@@ -4,6 +4,7 @@
     "description": "",
     "main": "src/app.js",
     "scripts": {
+        "start": "nodemon ./src/app.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {
@@ -15,5 +16,8 @@
     "bugs": {
         "url": "https://github.com/AyoubKhial/node-starter/issues"
     },
-    "homepage": "https://github.com/AyoubKhial/node-starter#readme"
+    "homepage": "https://github.com/AyoubKhial/node-starter#readme",
+    "devDependencies": {
+        "nodemon": "^2.0.4"
+    }
 }
