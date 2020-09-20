@@ -1,5 +1,6 @@
 import express from 'express';
 import config from '../config/env-vars';
+import terminate from './terminate';
 
 const app = express();
 
@@ -9,9 +10,16 @@ const start = () => {
         res.send('Hello world');
     });
 
-    app.listen(config.PORT, () => {
+    const server = app.listen(config.PORT, () => {
         console.log(`Server running in ${config.ENV} mode on port ${config.PORT}...`);
     });
+
+    const exitHandler = terminate(server, { coredump: false, timeout: 500 });
+
+    process.on('uncaughtException', exitHandler());
+    process.on('unhandledRejection', exitHandler());
+    process.on('SIGTERM', exitHandler());
+    process.on('SIGINT', exitHandler());
 };
 
 export default { start };
