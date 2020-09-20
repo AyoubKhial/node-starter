@@ -1,5 +1,6 @@
 const config = {
-    NODE_ENV: process.env.NODE_ENV
+    ENV: process.env.NODE_ENV,
+    PORT: process.env.NODE_PORT
 };
 
 export default config;
