@@ -1,3 +1,5 @@
 node_modules/
 .vscode/
 dist/
+src/config/env/development.env
+src/config/env/production.env
