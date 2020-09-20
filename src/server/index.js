@@ -1,10 +1,14 @@
 import express from 'express';
+import morgan from 'morgan';
 import config from '../config/env-vars';
 import terminate from './terminate';
 
 const app = express();
 
 const start = () => {
+    if (config.ENV !== 'production') {
+        app.use(morgan('dev'));
+    }
     // This is a simple test route
     app.get('/', (req, res) => {
         res.send('Hello world');
