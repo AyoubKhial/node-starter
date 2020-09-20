@@ -1,4 +1,5 @@
 import './config/env';
+import config from './config/env-vars';
 
 // Check which environment we're on
-console.log(process.env.NODE_ENV);
+console.log(config.NODE_ENV);
