@@ -6,10 +6,10 @@
     "scripts": {
         "build": "npm run clean && npm run transpile",
         "clean": "rm -rf dist",
+        "dev": "SET \"NODE_ENV=development\" && nodemon -r dotenv/config --exec babel-node ./src/app.js",
         "lint": "eslint --fix . && echo 'Lint complete.'",
-        "prod": "npm run build && npm run server",
         "server": "node ./dist/app.js",
-        "start": "nodemon --exec babel-node ./src/app.js",
+        "start": "npm run build && npm run server",
         "transpile": "babel ./src --out-dir dist"
     },
     "repository": {
