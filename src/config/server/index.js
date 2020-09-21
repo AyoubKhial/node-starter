@@ -1,6 +1,6 @@
 import express from 'express';
 import morgan from 'morgan';
-import config from '../config/env-vars';
+import config from '../env-vars';
 import terminate from './terminate';
 
 const app = express();

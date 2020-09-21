@@ -1,4 +1,4 @@
 import './config/env';
-import server from './server';
+import server from './config/server';
 
 server.start();
