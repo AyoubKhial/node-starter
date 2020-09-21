@@ -1,10 +1,12 @@
+import logger from '../logger';
+
 const terminate = (server, options = { coredump: false, timeout: 500 }) => {
     const exit = code => {
         options.coredump ? process.abort() : process.exit(code);
     };
 
     return () => err => {
-        if (err && err instanceof Error) console.log(err.message, err.stack);
+        if (err && err instanceof Error) logger.error(err.message, err.stack);
         // Attempt a graceful shutdown
         server.close(exit);
         // If server hasn't finished in 1000ms, shut down process
