@@ -3,5 +3,6 @@
     "events": {
         "start": "cls || clear"
     },
-    "ext": "*"
+    "ext": "*",
+    "ignore": ["src/logs"] 
 }
