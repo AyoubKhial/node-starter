@@ -20,8 +20,8 @@ const start = () => {
         res.send('Hello world');
     });
 
-    const server = app.listen(config.PORT, () => {
-        logger.info(`Server running in ${config.ENV} mode on port ${config.PORT}...`);
+    const server = app.listen(config.NODE_PORT, () => {
+        logger.info(`Server running in ${config.NODE_ENV} mode on port ${config.NODE_PORT}...`);
     });
 
     const exitHandler = terminate(server, { coredump: false, timeout: 500 });
