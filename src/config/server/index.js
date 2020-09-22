@@ -7,9 +7,7 @@ import terminate from './terminate';
 const app = express();
 
 const start = () => {
-    if (config.ENV !== 'production') {
-        app.use(morgan('dev', { stream: logger.stream }));
-    }
+    app.use(morgan('dev', { stream: logger.stream }));
     // This is a simple test route
     app.get('/', (req, res) => {
         try {
