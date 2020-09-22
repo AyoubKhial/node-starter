@@ -8,15 +8,6 @@ const app = express();
 
 const start = () => {
     app.use(morgan('dev', { stream: logger.stream }));
-    // This is a simple test route
-    app.get('/', (req, res) => {
-        try {
-            JSON.parse('{ "a": "b }');
-        } catch (error) {
-            logger.error(`500 - ${error.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
-        }
-        res.send('Hello world');
-    });
 
     const server = app.listen(config.NODE_PORT, () => {
         logger.info(`Server running in ${config.NODE_ENV} mode on port ${config.NODE_PORT}...`);
