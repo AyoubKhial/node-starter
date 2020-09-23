@@ -1,6 +1,8 @@
 import express from 'express';
 import morgan from 'morgan';
 import config from '../env-vars';
+import errorHandler from '../../middleware/error-handler';
+import ErrorResponse from '../../utils/error-response';
 import getPathsList from './helpers';
 import logger from '../logger';
 import modules from './modules';
@@ -22,6 +24,10 @@ const start = async () => {
     else importedModules.forEach(module => module.default(router));
 
     app.use('/api', router);
+    app.all('*', (req, res, next) => {
+        next(new ErrorResponse(`Can't find ${req.originalUrl} on this server!`, 404));
+    });
+    app.use(errorHandler);
 
     const server = app.listen(config.NODE_PORT, () => {
         logger.info(`Server running in ${config.NODE_ENV} mode on port ${config.NODE_PORT}...`);
