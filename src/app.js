@@ -3,7 +3,5 @@ import database from './config/database';
 import server from './config/server';
 
 (async () => {
-    await database.connect();
+    await Promise.all([server.start(), database.connect()]);
 })();
-
-server.start();
