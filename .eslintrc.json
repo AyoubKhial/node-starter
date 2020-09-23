@@ -18,7 +18,7 @@
         "no-param-reassign": "off",
         "arrow-parens": "off",
         "indent": ["error", 4],
-        "max-len": ["error", 100],
+        "max-len": ["error", 125],
         "global-require": "off",
         "import/no-dynamic-require": "off",
         "prefer-promise-reject-errors": "off",
