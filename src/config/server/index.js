@@ -21,6 +21,8 @@ const start = async () => {
     if (error) logger.error(error.message);
     else importedModules.forEach(module => module.default(router));
 
+    app.use('/api', router);
+
     const server = app.listen(config.NODE_PORT, () => {
         logger.info(`Server running in ${config.NODE_ENV} mode on port ${config.NODE_PORT}...`);
     });
