@@ -7,6 +7,13 @@ const routes = [
         handler: async (req, res, next) => {
             controller.find(req, res, next);
         }
+    },
+    {
+        path: '/users/:id',
+        method: 'GET',
+        handler: async (req, res, next) => {
+            controller.findById(req, res, next);
+        }
     }
 ];
 
