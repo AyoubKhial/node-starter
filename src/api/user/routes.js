@@ -14,6 +14,13 @@ const routes = [
         handler: async (req, res, next) => {
             controller.findById(req, res, next);
         }
+    },
+    {
+        path: '/users/:id',
+        method: 'PUT',
+        handler: async (req, res, next) => {
+            controller.updateById(req, res, next);
+        }
     }
 ];
 

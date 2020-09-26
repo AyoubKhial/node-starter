@@ -15,4 +15,12 @@ const findById = asyncWrapper(async (req, res, next) => {
     return response.build(res, user, 200);
 });
 
-export { find, findById };
+const updateById = asyncWrapper(async (req, res, next) => {
+    const { id } = req.params;
+    const user = req.body;
+    const updatedUser = await User.findByIdAndUpdate(id, user, { new: true, runValidators: true });
+    if (!updatedUser) return next(new ErrorResponse(`Resource not found with id: '${id}'.`, 404));
+    return response.build(res, updatedUser, 201);
+});
+
+export { find, findById, updateById };
