@@ -21,6 +21,13 @@ const routes = [
         handler: async (req, res, next) => {
             controller.updateById(req, res, next);
         }
+    },
+    {
+        path: '/users/:id',
+        method: 'DELETE',
+        handler: async (req, res, next) => {
+            controller.deleteById(req, res, next);
+        }
     }
 ];
 
