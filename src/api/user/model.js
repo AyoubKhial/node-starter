@@ -1,3 +1,4 @@
+import { genSalt, hash } from 'bcryptjs';
 import { model, Schema } from 'mongoose';
 
 const schema = new Schema(
@@ -52,5 +53,11 @@ const schema = new Schema(
     },
     { timestamps: true }
 );
+
+schema.pre('save', async function (next) {
+    if (!this.isModified('password')) next();
+    const salt = await genSalt();
+    this.password = await hash(this.password, salt);
+});
 
 export default model('User', schema);
