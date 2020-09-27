@@ -1,5 +1,6 @@
 import express from 'express';
 import morgan from 'morgan';
+import cookieParser from 'cookie-parser';
 import config from '../env-vars';
 import errorHandler from '../../middleware/error-handler';
 import ErrorResponse from '../../utils/error-response';
@@ -13,6 +14,7 @@ const app = express();
 
 const start = async () => {
     app.use(express.json());
+    app.use(cookieParser());
     app.use(morgan('dev', { stream: logger.stream }));
 
     const router = express.Router();
