@@ -1,6 +1,8 @@
+import { createHash } from 'crypto';
 import asyncWrapper from '../../utils/async-wrapper';
 import ErrorResponse from '../../utils/error-response';
 import response from '../../utils/response-builder';
+import sendMail from '../../services/mailer';
 import sendTokenResponse from './service';
 import User from '../user/model';
 
@@ -30,4 +32,36 @@ const getLoggedInUser = (req, res, next) => {
     return response.build(res, { success: true, user }, 200);
 };
 
-export { register, login, logout, getLoggedInUser };
+const forgotPassword = asyncWrapper(async (req, res, next) => {
+    const email = req.body.email;
+    const user = await User.findOne({ email });
+    if (!user) return next(new ErrorResponse('There is no user with that email', 404));
+    const resetToken = user.getResetPasswordToken();
+    await user.save({ validateBeforeSave: false });
+    const resetUrl = `${req.protocol}://${req.get('host')}/api/auth/reset-password/${resetToken}`;
+    const message = `Please make a put request to: \n\n${resetUrl}`;
+    try {
+        await sendMail({ email: user.email, subject: 'Reset password', message });
+        return response.build(res, { success: true, data: 'Email sent successfully.' }, 200);
+    } catch {
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpire = undefined;
+        await user.save({ validateBeforeSave: false });
+        return next(new ErrorResponse('Email could not be sent.', 500));
+    }
+});
+
+const resetPassword = asyncWrapper(async (req, res, next) => {
+    const resetToken = req.params.resetToken;
+    const password = req.body.password;
+    const resetPasswordToken = createHash('sha256').update(resetToken).digest('hex');
+    const user = await User.findOne({ resetPasswordToken, resetPasswordExpire: { $gt: Date.now() } });
+    if (!user) return next(new ErrorResponse('Invalid Token.', 400));
+    user.password = password;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+    await user.save();
+    return sendTokenResponse(user, 200, res);
+});
+
+export { register, login, logout, getLoggedInUser, forgotPassword, resetPassword };

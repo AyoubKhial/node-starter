@@ -31,6 +31,20 @@ const routes = [
         handler: async (req, res, next) => {
             controller.getLoggedInUser(req, res, next);
         }
+    },
+    {
+        path: '/auth/forgot-password',
+        method: 'POST',
+        handler: async (req, res, next) => {
+            controller.forgotPassword(req, res, next);
+        }
+    },
+    {
+        path: '/auth/reset-password/:resetToken',
+        method: 'PUT',
+        handler: async (req, res, next) => {
+            controller.resetPassword(req, res, next);
+        }
     }
 ];
 
