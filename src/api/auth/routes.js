@@ -21,6 +21,16 @@ const routes = [
         handler: async (req, res, next) => {
             controller.logout(req, res, next);
         }
+    },
+    {
+        path: '/auth/me',
+        method: 'GET',
+        protected: {
+            roles: ['USER', 'PUBLISHER', 'ADMIN']
+        },
+        handler: async (req, res, next) => {
+            controller.getLoggedInUser(req, res, next);
+        }
     }
 ];
 

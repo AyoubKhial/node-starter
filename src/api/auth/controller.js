@@ -25,4 +25,9 @@ const logout = asyncWrapper(async (req, res, next) => {
     return response.build(res, { success: true }, 200);
 });
 
-export { register, login, logout };
+const getLoggedInUser = (req, res, next) => {
+    const user = req.user;
+    return response.build(res, { success: true, user }, 200);
+};
+
+export { register, login, logout, getLoggedInUser };
