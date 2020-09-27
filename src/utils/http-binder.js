@@ -1,4 +1,5 @@
 import advancedResult from '../middleware/advanced-result';
+import protect from '../middleware/auth';
 
 const insert = (arr, index, newItem) => [...arr.slice(0, index), newItem, ...arr.slice(index)];
 
@@ -11,6 +12,7 @@ const addMiddleware = (args, middleware) => {
 const binder = (app, routes) => {
     for (const route of routes) {
         let args = [route.path, route.handler];
+        if (route?.protected) args = addMiddleware(args, protect(route?.protected?.roles));
         if (route?.advancedResult) args = addMiddleware(args, advancedResult(route?.advancedResult?.model));
         app[route.method.toLowerCase()](...args);
     }

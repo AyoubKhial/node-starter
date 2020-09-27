@@ -8,6 +8,9 @@ const routes = [
         advancedResult: {
             model: User
         },
+        protected: {
+            roles: ['ADMIN']
+        },
         handler: async (req, res, next) => {
             controller.find(req, res, next);
         }
@@ -15,6 +18,9 @@ const routes = [
     {
         path: '/users/:id',
         method: 'GET',
+        protected: {
+            roles: ['ADMIN']
+        },
         handler: async (req, res, next) => {
             controller.findById(req, res, next);
         }
