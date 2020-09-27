@@ -5,8 +5,8 @@ const terminate = (server, options = { coredump: false, timeout: 500 }) => {
         options.coredump ? process.abort() : process.exit(code);
     };
 
-    return () => err => {
-        if (err && err instanceof Error) logger.error(err.message, err.stack);
+    return () => error => {
+        if (error && error instanceof Error) logger.error(error);
         // Attempt a graceful shutdown
         server.close(exit);
         // If server hasn't finished in 1000ms, shut down process

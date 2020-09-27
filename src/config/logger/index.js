@@ -1,24 +1,30 @@
 import path from 'path';
 import { createLogger, format, transports } from 'winston';
 
-const { combine, timestamp, prettyPrint, errors, colorize, simple } = format;
+const { combine, timestamp, prettyPrint, errors, colorize, printf } = format;
+
+const logFormat = printf(info => {
+    const output = info.stack ? `${info.level}: ${info.message} ${info.stack}` : `${info.level}: ${info.message}`;
+    return output;
+});
 
 const options = {
     file: {
         level: 'info',
         filename: path.join(__dirname, '../../logs/app.log'),
         handleExceptions: true,
-        format: combine(errors({ stack: true }), timestamp(), prettyPrint()),
+        format: combine(timestamp(), prettyPrint()),
         maxsize: 5242880
     },
     console: {
         level: 'debug',
         handleExceptions: true,
-        format: combine(colorize(), simple())
+        format: combine(colorize(), logFormat)
     }
 };
 
 const logger = new createLogger({
+    format: combine(errors({ stack: true })),
     transports: [new transports.File(options.file), new transports.Console(options.console)],
     exitOnError: false
 });

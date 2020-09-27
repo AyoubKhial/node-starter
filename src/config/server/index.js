@@ -20,7 +20,7 @@ const start = async () => {
     const imports = modulesPaths.map(modulePath => import(`../../api/${modulePath}`));
 
     const [error, importedModules] = await to(Promise.all(imports));
-    if (error) logger.error(error.message);
+    if (error) logger.error(error);
     else importedModules.forEach(module => module.default(router));
 
     app.use('/api', router);
