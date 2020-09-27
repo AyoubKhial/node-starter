@@ -1,8 +1,5 @@
 {
     "watch": ["src"],
-    "events": {
-        "start": "cls || clear"
-    },
     "ext": "*",
     "ignore": ["src/logs"] 
 }
