@@ -3,9 +3,9 @@ import ErrorResponse from '../../utils/error-response';
 import response from '../../utils/response-builder';
 import User from './model';
 
+// example: /users?fields=name,year&sort=-createdAt&age[lte]=75
 const find = asyncWrapper(async (req, res, next) => {
-    const users = await User.find();
-    return response.build(res, users, 200);
+    response.build(res, res.advancedResult, 200);
 });
 
 const findById = asyncWrapper(async (req, res, next) => {

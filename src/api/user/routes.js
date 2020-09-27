@@ -1,9 +1,13 @@
 import * as controller from './controller';
+import User from './model';
 
 const routes = [
     {
         path: '/users',
         method: 'GET',
+        advancedResult: {
+            model: User
+        },
         handler: async (req, res, next) => {
             controller.find(req, res, next);
         }
