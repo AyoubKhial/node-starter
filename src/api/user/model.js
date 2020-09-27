@@ -1,4 +1,4 @@
-import { genSalt, hash } from 'bcryptjs';
+import { compare, genSalt, hash } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import { model, Schema } from 'mongoose';
 
@@ -63,6 +63,10 @@ schema.pre('save', async function (next) {
 
 schema.methods.getSignedJwtToken = function () {
     return sign({ id: this._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE });
+};
+
+schema.methods.matchPassword = async function (enteredPassword) {
+    return compare(enteredPassword, this.password);
 };
 
 export default model('User', schema);
