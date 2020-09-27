@@ -1,4 +1,5 @@
 import { compare, genSalt, hash } from 'bcryptjs';
+import { createHash, randomBytes } from 'crypto';
 import { sign } from 'jsonwebtoken';
 import { model, Schema } from 'mongoose';
 
@@ -67,6 +68,13 @@ schema.methods.getSignedJwtToken = function () {
 
 schema.methods.matchPassword = async function (enteredPassword) {
     return compare(enteredPassword, this.password);
+};
+
+schema.methods.getResetPasswordToken = function () {
+    const resetToken = randomBytes(20).toString('hex');
+    this.resetPasswordToken = createHash('sha256').update(resetToken).digest('hex');
+    this.resetPasswordExpire = Date.now() + 10 * 60 * 1000;
+    return resetToken;
 };
 
 export default model('User', schema);
