@@ -12,6 +12,7 @@ import to from '../../utils/await-to';
 const app = express();
 
 const start = async () => {
+    app.use(express.json());
     app.use(morgan('dev', { stream: logger.stream }));
 
     const router = express.Router();
