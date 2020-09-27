@@ -60,4 +60,8 @@ schema.pre('save', async function (next) {
     this.password = await hash(this.password, salt);
 });
 
+schema.methods.getSignedJwtToken = function () {
+    return sign({ id: this._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE });
+};
+
 export default model('User', schema);
