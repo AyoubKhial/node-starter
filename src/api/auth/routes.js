@@ -14,6 +14,13 @@ const routes = [
         handler: async (req, res, next) => {
             controller.login(req, res, next);
         }
+    },
+    {
+        path: '/auth/logout',
+        method: 'GET',
+        handler: async (req, res, next) => {
+            controller.logout(req, res, next);
+        }
     }
 ];
 

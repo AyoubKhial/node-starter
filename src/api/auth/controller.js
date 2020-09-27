@@ -1,5 +1,6 @@
 import asyncWrapper from '../../utils/async-wrapper';
 import ErrorResponse from '../../utils/error-response';
+import response from '../../utils/response-builder';
 import sendTokenResponse from './service';
 import User from '../user/model';
 
@@ -19,4 +20,9 @@ const login = asyncWrapper(async (req, res, next) => {
     return sendTokenResponse(user, 200, res);
 });
 
-export { register, login };
+const logout = asyncWrapper(async (req, res, next) => {
+    res.cookie('token', 'none', { expires: new Date(Date.now() + 10 * 1000) });
+    return response.build(res, { success: true }, 200);
+});
+
+export { register, login, logout };
