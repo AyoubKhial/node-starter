@@ -4,7 +4,7 @@ import { createLogger, format, transports } from 'winston';
 const { combine, timestamp, prettyPrint, errors, colorize, printf } = format;
 
 const logFormat = printf(info => {
-    const output = info.stack ? `${info.level}: ${info.message} ${info.stack}` : `${info.level}: ${info.message}`;
+    const output = info.stack ? `${info.level}: ${info.message}\n${info.stack}` : `${info.level}: ${info.message}`;
     return output;
 });
 
