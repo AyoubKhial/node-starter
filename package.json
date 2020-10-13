@@ -23,11 +23,6 @@
     },
     "homepage": "https://github.com/AyoubKhial/node-starter#readme",
     "devDependencies": {
-        "@babel/cli": "^7.11.6",
-        "@babel/core": "^7.11.6",
-        "@babel/node": "^7.10.5",
-        "@babel/plugin-transform-runtime": "^7.11.5",
-        "@babel/preset-env": "^7.11.5",
         "dotenv": "^8.2.0",
         "eslint": "^7.9.0",
         "eslint-config-airbnb-base": "^14.2.0",
@@ -38,7 +33,6 @@
         "prettier": "^2.1.2"
     },
     "dependencies": {
-        "@babel/runtime": "^7.11.2",
         "bcryptjs": "^2.4.3",
         "cookie-parser": "^1.4.5",
         "express": "^4.17.1",
