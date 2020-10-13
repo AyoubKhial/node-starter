@@ -1,4 +1,4 @@
-const config = {
+module.exports = {
     NODE_ENV: process.env.NODE_ENV,
     NODE_PORT: process.env.NODE_PORT,
     DB_HOST: process.env.DB_HOST,
@@ -14,5 +14,3 @@ const config = {
     FROM_EMAIL: process.env.FROM_EMAIL,
     FROM_NAME: process.env.FROM_NAME
 };
-
-export default config;

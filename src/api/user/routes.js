@@ -1,5 +1,5 @@
-import * as controller from './controller';
-import User from './model';
+const controller = require('./controller');
+const User = require('./model');
 
 const routes = [
     {
@@ -41,4 +41,4 @@ const routes = [
     }
 ];
 
-export default routes;
+module.exports = routes;

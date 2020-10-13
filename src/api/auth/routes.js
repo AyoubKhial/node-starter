@@ -1,4 +1,4 @@
-import * as controller from './controller';
+const controller = require('./controller');
 
 const routes = [
     {
@@ -48,4 +48,4 @@ const routes = [
     }
 ];
 
-export default routes;
+module.exports = routes;

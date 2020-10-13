@@ -1,5 +1,5 @@
-import advancedResult from '../middleware/advanced-result';
-import protect from '../middleware/auth';
+const advancedResult = require('../middleware/advanced-result');
+const protect = require('../middleware/auth');
 
 const insert = (arr, index, newItem) => [...arr.slice(0, index), newItem, ...arr.slice(index)];
 
@@ -19,4 +19,4 @@ const binder = (app, routes) => {
     return app;
 };
 
-export default binder;
+module.exports = binder;

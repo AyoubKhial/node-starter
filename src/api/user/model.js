@@ -1,7 +1,7 @@
-import { compare, genSalt, hash } from 'bcryptjs';
-import { createHash, randomBytes } from 'crypto';
-import { sign } from 'jsonwebtoken';
-import { model, Schema } from 'mongoose';
+const { compare, genSalt, hash } = require('bcryptjs');
+const { createHash, randomBytes } = require('crypto');
+const { sign } = require('jsonwebtoken');
+const { model, Schema } = require('mongoose');
 
 const schema = new Schema(
     {
@@ -77,4 +77,4 @@ schema.methods.getResetPasswordToken = function () {
     return resetToken;
 };
 
-export default model('User', schema);
+module.exports = model('User', schema);

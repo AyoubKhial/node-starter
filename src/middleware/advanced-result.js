@@ -36,4 +36,4 @@ const advancedResult = model => async (req, res, next) => {
     next();
 };
 
-export default advancedResult;
+module.exports = advancedResult;

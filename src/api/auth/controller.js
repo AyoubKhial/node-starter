@@ -1,10 +1,10 @@
-import { createHash } from 'crypto';
-import asyncWrapper from '../../utils/async-wrapper';
-import ErrorResponse from '../../utils/error-response';
-import response from '../../utils/response-builder';
-import sendMail from '../../services/mailer';
-import sendTokenResponse from './service';
-import User from '../user/model';
+const { createHash } = require('crypto');
+const asyncWrapper = require('../../utils/async-wrapper');
+const ErrorResponse = require('../../utils/error-response');
+const response = require('../../utils/response-builder');
+const sendMail = require('../../services/mailer');
+const sendTokenResponse = require('./service');
+const User = require('../user/model');
 
 const register = asyncWrapper(async (req, res, next) => {
     const userData = req.body;
@@ -64,4 +64,4 @@ const resetPassword = asyncWrapper(async (req, res, next) => {
     return sendTokenResponse(user, 200, res);
 });
 
-export { register, login, logout, getLoggedInUser, forgotPassword, resetPassword };
+module.exports = { register, login, logout, getLoggedInUser, forgotPassword, resetPassword };
