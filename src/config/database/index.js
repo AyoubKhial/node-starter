@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const config = require('../env-vars');
+const config = require('../env');
 const logger = require('../logger');
 
 const connect = async () => {
