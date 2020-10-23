@@ -4,6 +4,11 @@ const routes = [
     {
         path: '/auth/register',
         method: 'POST',
+        cleanCache: {
+            collections: ['User'],
+            methods: ['GET'],
+            types: ['list']
+        },
         handler: async (req, res, next) => {
             controller.register(req, res, next);
         }

@@ -5,11 +5,18 @@ const routes = [
     {
         path: '/users',
         method: 'GET',
+        protected: {
+            roles: ['ADMIN']
+        },
         advancedResult: {
             model: User
         },
-        protected: {
-            roles: ['ADMIN']
+        cachedResult: {
+            collection: 'User',
+            method: 'GET',
+            type: 'list',
+            keys: ['page', 'size', 'sort', 'expand', 'fields'],
+            source: 'query'
         },
         handler: async (req, res, next) => {
             controller.find(req, res, next);
