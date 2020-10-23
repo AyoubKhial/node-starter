@@ -4,7 +4,7 @@ const routes = [
     {
         path: '/auth/register',
         method: 'POST',
-        cleanCache: {
+        clearCache: {
             collections: ['User'],
             methods: ['GET'],
             types: ['list']
