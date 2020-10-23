@@ -7,7 +7,6 @@ const clearCache = ({ collections, methods, types }) => async (req, res, next) =
         const keyPattern = `collection:${combination[0]} method:${combination[1]} type:${combination[2]}*`;
         return cache.getKeys(keyPattern);
     });
-    console.log(promises);
     const keys = await Promise.all(promises);
     for (const key of keys.flat()) {
         cache.remove(key);
