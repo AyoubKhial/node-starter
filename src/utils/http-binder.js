@@ -1,7 +1,7 @@
-const advancedResult = require('../middleware/advanced-result');
-const clearCache = require('../middleware/clear-cache');
-const cachedResult = require('../middleware/cached-result');
-const protect = require('../middleware/auth');
+import advancedResult from '../middleware/advanced-result.js';
+import clearCache from '../middleware/clear-cache.js';
+import cachedResult from '../middleware/cached-result.js';
+import protect from '../middleware/auth.js';
 
 const insert = (arr, index, newItem) => [...arr.slice(0, index), newItem, ...arr.slice(index)];
 
@@ -23,4 +23,4 @@ const binder = (app, routes) => {
     return app;
 };
 
-module.exports = binder;
+export default binder;

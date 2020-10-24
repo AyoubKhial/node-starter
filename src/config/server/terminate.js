@@ -1,4 +1,4 @@
-const logger = require('../logger');
+import logger from '../logger/index.js';
 
 const terminate = (server, options = { coredump: false, timeout: 500 }) => {
     const exit = code => {
@@ -15,4 +15,4 @@ const terminate = (server, options = { coredump: false, timeout: 500 }) => {
     };
 };
 
-module.exports = terminate;
+export default terminate;

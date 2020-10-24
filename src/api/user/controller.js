@@ -1,7 +1,7 @@
-const asyncWrapper = require('../../utils/async-wrapper');
-const ErrorResponse = require('../../utils/error-response');
-const response = require('../../utils/response-builder');
-const User = require('./model');
+import asyncWrapper from '../../utils/async-wrapper.js';
+import ErrorResponse from '../../utils/error-response.js';
+import response from '../../utils/response-builder.js';
+import User from './model.js';
 
 // example: /users?fields=name,year&sort=-createdAt&age[lte]=75
 const find = asyncWrapper(async (req, res, next) => {
@@ -30,4 +30,4 @@ const deleteById = asyncWrapper(async (req, res, next) => {
     return response.build(res, deletedUser, 201);
 });
 
-module.exports = { find, findById, updateById, deleteById };
+export { find, findById, updateById, deleteById };

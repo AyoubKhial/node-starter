@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     user: 'user',
     auth: 'auth'
 };

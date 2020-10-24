@@ -1,14 +1,14 @@
-const express = require('express');
-const morgan = require('morgan');
-const cookieParser = require('cookie-parser');
-const config = require('../env');
-const errorHandler = require('../../middleware/error-handler');
-const ErrorResponse = require('../../utils/error-response');
-const getPathsList = require('./helpers');
-const logger = require('../logger');
-const modules = require('./modules');
-const terminate = require('./terminate');
-const to = require('../../utils/await-to');
+import express from 'express';
+import morgan from 'morgan';
+import cookieParser from 'cookie-parser';
+import config from '../env/index.js';
+import errorHandler from '../../middleware/error-handler.js';
+import ErrorResponse from '../../utils/error-response.js';
+import getPathsList from './helpers.js';
+import logger from '../logger/index.js';
+import modules from './modules.js';
+import terminate from './terminate.js';
+import to from '../../utils/await-to.js';
 
 const app = express();
 
@@ -20,11 +20,11 @@ const start = async () => {
     const router = express.Router();
 
     const modulesPaths = getPathsList(modules);
-    const imports = modulesPaths.map(modulePath => require(`../../api/${modulePath}`));
+    const imports = modulesPaths.map(modulePath => import(`../../api/${modulePath}/index.js`));
 
     const [error, importedModules] = await to(Promise.all(imports));
     if (error) logger.error(error);
-    else importedModules.forEach(module => module(router));
+    else importedModules.forEach(module => module.default(router));
 
     app.use('/api', router);
     app.all('*', (req, res, next) => {
@@ -44,4 +44,4 @@ const start = async () => {
     process.on('SIGINT', exitHandler());
 };
 
-module.exports = { start };
+export default { start };

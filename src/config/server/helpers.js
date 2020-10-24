@@ -10,4 +10,4 @@ const getPathsList = node => {
     return pathsList;
 };
 
-module.exports = getPathsList;
+export default getPathsList;

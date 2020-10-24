@@ -1,5 +1,5 @@
-const ErrorResponse = require('../utils/error-response');
-const Response = require('../utils/response-builder');
+import ErrorResponse from '../utils/error-response.js';
+import Response from '../utils/response-builder.js';
 
 const errorHandler = (err, req, res, next) => {
     // Mongoose bad ObjectID
@@ -23,4 +23,4 @@ const errorHandler = (err, req, res, next) => {
     Response.build(res, { success: false, error: err.message || 'Server Error.' }, err.statusCode || 500);
 };
 
-module.exports = errorHandler;
+export default errorHandler;

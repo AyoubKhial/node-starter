@@ -1,5 +1,5 @@
-const util = require('util');
-const { client } = require('./index');
+import util from 'util';
+import { client } from './index.js';
 
 const set = ({ key, data, mode, expiresIn }) => {
     client.set(key, data, mode, expiresIn);
@@ -19,4 +19,4 @@ const getKeys = keyPattern => {
     return client.keys(keyPattern);
 };
 
-module.exports = { set, get, remove, getKeys };
+export { set, get, remove, getKeys };

@@ -1,4 +1,4 @@
-const cache = require('../config/cache/helper');
+import { get } from '../config/cache/helper.js';
 
 const cachedResult = ({ collection, method, type, keys, source }) => async (req, res, next) => {
     const origin = source === 'query' ? req.query : source === 'body' ? req.body : req.params;
@@ -7,9 +7,9 @@ const cachedResult = ({ collection, method, type, keys, source }) => async (req,
     if ('page' in keysValues && !keysValues.page) keysValues.page = 1;
     if ('size' in keysValues && !keysValues.size) keysValues.size = 100;
     const dataAsString = Object.entries({ ...data, ...keysValues }).reduce((a, b) => `${a} ${b[0]}:${b[1]}`, '');
-    const cachedData = await cache.get(dataAsString.trim());
+    const cachedData = await get(dataAsString.trim());
     if (cachedData !== null) res.cachedData = JSON.parse(cachedData);
     next();
 };
 
-module.exports = cachedResult;
+export default cachedResult;

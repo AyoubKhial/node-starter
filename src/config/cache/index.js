@@ -1,7 +1,8 @@
-const redis = require('redis');
-const logger = require('../logger');
-const { REDIS_HOST, REDIS_PORT } = require('../env');
+import redis from 'redis';
+import logger from '../logger/index.js';
+import config from '../env/index.js';
 
+const { REDIS_HOST, REDIS_PORT } = config;
 const client = redis.createClient({
     host: REDIS_HOST,
     port: REDIS_PORT
@@ -16,4 +17,4 @@ const connect = () => {
     });
 };
 
-module.exports = { connect, client };
+export { connect, client };
