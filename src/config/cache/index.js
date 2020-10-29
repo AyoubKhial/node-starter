@@ -2,10 +2,9 @@ import redis from 'redis';
 import logger from '../logger/index.js';
 import config from '../env/index.js';
 
-const { REDIS_HOST, REDIS_PORT } = config;
 const client = redis.createClient({
-    host: REDIS_HOST,
-    port: REDIS_PORT
+    host: config.redis.host,
+    port: config.redis.port
 });
 
 const connect = () => {

@@ -32,8 +32,8 @@ const start = async () => {
     });
     app.use(errorHandler);
 
-    const server = app.listen(config.NODE_PORT, () => {
-        logger.info(`Server running in ${config.NODE_ENV} mode on port ${config.NODE_PORT}...`);
+    const server = app.listen(config.node.port, () => {
+        logger.info(`Server running in ${config.node.env} mode on port ${config.node.port}...`);
     });
 
     const exitHandler = terminate(server, { coredump: false, timeout: 500 });

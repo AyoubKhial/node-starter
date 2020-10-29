@@ -3,7 +3,7 @@ import config from '../env/index.js';
 import logger from '../logger/index.js';
 
 const connect = async () => {
-    const url = `mongodb://${config.DB_HOST}:${config.DB_PORT}/${config.DB_NAME}`;
+    const url = `mongodb://${config.database.host}:${config.database.port}/${config.database.name}`;
     const options = {
         useNewUrlParser: true,
         useUnifiedTopology: true,

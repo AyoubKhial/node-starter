@@ -2,6 +2,7 @@ import bcryptjs from 'bcryptjs';
 import { createHash, randomBytes } from 'crypto';
 import jsonwebtoken from 'jsonwebtoken';
 import mongoose from 'mongoose';
+import config from '../../config/env/index.js';
 
 const { compare, genSalt, hash } = bcryptjs;
 const { sign } = jsonwebtoken;
@@ -67,7 +68,7 @@ schema.pre('save', async function (next) {
 });
 
 schema.methods.getSignedJwtToken = function () {
-    return sign({ id: this._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE });
+    return sign({ id: this._id }, config.jwt.secret, { expiresIn: config.jwt.expiresIn });
 };
 
 schema.methods.matchPassword = async function (enteredPassword) {
