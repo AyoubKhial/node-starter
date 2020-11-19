@@ -16,6 +16,10 @@ const routes = [
     {
         path: '/auth/login',
         method: 'POST',
+        limit: {
+            windowMs: 1 * 60 * 1000,
+            max: 5
+        },
         handler: async (req, res, next) => {
             controller.login(req, res, next);
         }
