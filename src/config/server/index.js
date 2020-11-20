@@ -5,6 +5,7 @@ import mongoSanitize from 'express-mongo-sanitize';
 import helmet from 'helmet';
 import hpp from 'hpp';
 import morgan from 'morgan';
+import xss from 'xss-clean';
 import config from '../env/index.js';
 import errorHandler from '../../middleware/error-handler.js';
 import ErrorResponse from '../../utils/error-response.js';
@@ -23,6 +24,7 @@ const start = async () => {
     app.use(csurf());
     app.use(helmet());
     app.use(hpp());
+    app.use(xss());
     app.use(morgan('dev', { stream: logger.stream }));
 
     const router = express.Router();
