@@ -1,4 +1,5 @@
 import cookieParser from 'cookie-parser';
+import csurf from 'csurf';
 import express from 'express';
 import mongoSanitize from 'express-mongo-sanitize';
 import helmet from 'helmet';
@@ -19,6 +20,7 @@ const start = async () => {
     app.use(express.json());
     app.use(cookieParser());
     app.use(mongoSanitize());
+    app.use(csurf());
     app.use(helmet());
     app.use(hpp());
     app.use(morgan('dev', { stream: logger.stream }));
