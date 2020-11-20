@@ -1,6 +1,7 @@
-import express from 'express';
-import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
+import express from 'express';
+import helmet from 'helmet';
+import morgan from 'morgan';
 import config from '../env/index.js';
 import errorHandler from '../../middleware/error-handler.js';
 import ErrorResponse from '../../utils/error-response.js';
@@ -15,6 +16,7 @@ const app = express();
 const start = async () => {
     app.use(express.json());
     app.use(cookieParser());
+    app.use(helmet());
     app.use(morgan('dev', { stream: logger.stream }));
 
     const router = express.Router();
