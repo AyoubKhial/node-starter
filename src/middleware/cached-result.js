@@ -1,4 +1,4 @@
-import { get } from '../config/cache/helper.js';
+const { get } = require('../config/cache/helper.js');
 
 const cachedResult = ({ collection, method, type, keys, source }) => async (req, res, next) => {
     const origin = source === 'query' ? req.query : source === 'body' ? req.body : req.params;
@@ -12,4 +12,4 @@ const cachedResult = ({ collection, method, type, keys, source }) => async (req,
     next();
 };
 
-export default cachedResult;
+module.exports = cachedResult;

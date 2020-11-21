@@ -1,19 +1,19 @@
-import cookieParser from 'cookie-parser';
-import csurf from 'csurf';
-import express from 'express';
-import mongoSanitize from 'express-mongo-sanitize';
-import helmet from 'helmet';
-import hpp from 'hpp';
-import morgan from 'morgan';
-import xss from 'xss-clean';
-import config from '../env/index.js';
-import errorHandler from '../../middleware/error-handler.js';
-import ErrorResponse from '../../utils/error-response.js';
-import getPathsList from './helpers.js';
-import logger from '../logger/index.js';
-import modules from './modules.js';
-import terminate from './terminate.js';
-import to from '../../utils/await-to.js';
+const cookieParser = require('cookie-parser');
+const csurf = require('csurf');
+const express = require('express');
+const mongoSanitize = require('express-mongo-sanitize');
+const helmet = require('helmet');
+const hpp = require('hpp');
+const morgan = require('morgan');
+const xss = require('xss-clean');
+const config = require('../env');
+const errorHandler = require('../../middleware/error-handler.js');
+const ErrorResponse = require('../../utils/error-response.js');
+const getPathsList = require('./helpers.js');
+const logger = require('../logger');
+const modules = require('./modules.js');
+const terminate = require('./terminate.js');
+const to = require('../../utils/await-to.js');
 
 const app = express();
 
@@ -21,7 +21,6 @@ const start = async () => {
     app.use(express.json({ limit: '10kb' }));
     app.use(cookieParser());
     app.use(mongoSanitize());
-    app.use(csurf());
     app.use(helmet());
     app.use(hpp());
     app.use(xss());
@@ -30,11 +29,11 @@ const start = async () => {
     const router = express.Router();
 
     const modulesPaths = getPathsList(modules);
-    const imports = modulesPaths.map(modulePath => import(`../../api/${modulePath}/index.js`));
+    const imports = modulesPaths.map(modulePath => require(`../../api/${modulePath}`));
 
     const [error, importedModules] = await to(Promise.all(imports));
     if (error) logger.error(error);
-    else importedModules.forEach(module => module.default(router));
+    else importedModules.forEach(module => module(router));
 
     app.use('/api', router);
     app.all('*', (req, res, next) => {
@@ -54,4 +53,4 @@ const start = async () => {
     process.on('SIGINT', exitHandler());
 };
 
-export default { start };
+module.exports = { start, app };

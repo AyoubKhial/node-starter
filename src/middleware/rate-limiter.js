@@ -1,4 +1,4 @@
-import rateLimit from 'express-rate-limit';
+const rateLimit = require('express-rate-limit');
 
 const options = {
     message: {
@@ -13,4 +13,4 @@ const rateLimiter = extraOptions => {
     return rateLimit({ ...options, ...extraOptions });
 };
 
-export default rateLimiter;
+module.exports = rateLimiter;

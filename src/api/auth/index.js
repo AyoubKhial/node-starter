@@ -1,4 +1,4 @@
-import routes from './routes.js';
-import HttpBinder from '../../utils/http-binder.js';
+const routes = require('./routes.js');
+const HttpBinder = require('../../utils/http-binder.js');
 
-export default app => HttpBinder(app, routes);
+module.exports = app => HttpBinder(app, routes);

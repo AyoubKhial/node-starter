@@ -1,4 +1,4 @@
-import { set } from '../config/cache/helper.js';
+const { set } = require('../config/cache/helper.js');
 
 const advancedResult = model => async (req, res, next) => {
     if (res.cachedData) res.advancedResult = res.cachedData;
@@ -44,4 +44,4 @@ const advancedResult = model => async (req, res, next) => {
     next();
 };
 
-export default advancedResult;
+module.exports = advancedResult;

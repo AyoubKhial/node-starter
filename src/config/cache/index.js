@@ -1,6 +1,6 @@
-import redis from 'redis';
-import logger from '../logger/index.js';
-import config from '../env/index.js';
+const redis = require('redis');
+const logger = require('../logger');
+const config = require('../env');
 
 const client = redis.createClient({
     host: config.redis.host,
@@ -16,4 +16,4 @@ const connect = () => {
     });
 };
 
-export { connect, client };
+module.exports = { connect, client };

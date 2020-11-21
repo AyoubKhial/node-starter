@@ -1,5 +1,5 @@
-import * as controller from './controller.js';
-import User from './model.js';
+const controller = require('./controller.js');
+const User = require('./model.js');
 
 const routes = [
     {
@@ -48,4 +48,4 @@ const routes = [
     }
 ];
 
-export default routes;
+module.exports = routes;

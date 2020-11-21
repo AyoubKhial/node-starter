@@ -1,4 +1,4 @@
-import config from '../../config/env/index.js';
+const config = require('../../config/env');
 
 const sendTokenResponse = (user, statusCode, res) => {
     const token = user.getSignedJwtToken();
@@ -10,4 +10,4 @@ const sendTokenResponse = (user, statusCode, res) => {
     res.status(statusCode).cookie('token', token, options).json({ success: true, token });
 };
 
-export default sendTokenResponse;
+module.exports = sendTokenResponse;

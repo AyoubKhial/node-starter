@@ -1,4 +1,4 @@
-export default {
+module.exports = {
     node: {
         env: process.env.NODE_ENV,
         port: process.env.NODE_PORT

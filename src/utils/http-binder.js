@@ -1,8 +1,8 @@
-import advancedResult from '../middleware/advanced-result.js';
-import clearCache from '../middleware/clear-cache.js';
-import cachedResult from '../middleware/cached-result.js';
-import protect from '../middleware/auth.js';
-import rateLimiter from '../middleware/rate-limiter.js';
+const advancedResult = require('../middleware/advanced-result.js');
+const clearCache = require('../middleware/clear-cache.js');
+const cachedResult = require('../middleware/cached-result.js');
+const protect = require('../middleware/auth.js');
+const rateLimiter = require('../middleware/rate-limiter.js');
 
 const insert = (arr, index, newItem) => [...arr.slice(0, index), newItem, ...arr.slice(index)];
 
@@ -25,4 +25,4 @@ const binder = (app, routes) => {
     return app;
 };
 
-export default binder;
+module.exports = binder;

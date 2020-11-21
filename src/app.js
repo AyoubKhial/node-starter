@@ -1,6 +1,6 @@
-import * as cache from './config/cache/index.js';
-import database from './config/database/index.js';
-import server from './config/server/index.js';
+const cache = require('./config/cache');
+const database = require('./config/database');
+const server = require('./config/server');
 
 cache.connect();
 (async () => {

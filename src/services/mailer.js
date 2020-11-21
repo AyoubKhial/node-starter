@@ -1,6 +1,6 @@
-import { createTransport } from 'nodemailer';
-import config from '../config/env/index.js';
-import logger from '../config/logger/index.js';
+const { createTransport } = require('nodemailer');
+const config = require('../config/env');
+const logger = require('../config/logger');
 
 const sendEmail = async options => {
     const transporter = createTransport({
@@ -21,4 +21,4 @@ const sendEmail = async options => {
     logger.info(`Message sent: ${info.messageId}`);
 };
 
-export default sendEmail;
+module.exports = sendEmail;

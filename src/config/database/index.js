@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
-import config from '../env/index.js';
-import logger from '../logger/index.js';
+const mongoose = require('mongoose');
+const config = require('../env');
+const logger = require('../logger');
 
 const connect = async () => {
     const url = `mongodb://${config.database.host}:${config.database.port}/${config.database.name}`;
@@ -18,4 +18,4 @@ const connect = async () => {
     }
 };
 
-export default { connect };
+module.exports = { connect };

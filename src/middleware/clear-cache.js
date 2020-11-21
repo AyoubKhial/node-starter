@@ -1,4 +1,4 @@
-import { getKeys, remove } from '../config/cache/helper.js';
+const { getKeys, remove } = require('../config/cache/helper.js');
 
 const clearCache = ({ collections, methods, types }) => async (req, res, next) => {
     const data = [collections, methods, types];
@@ -14,4 +14,4 @@ const clearCache = ({ collections, methods, types }) => async (req, res, next) =
     next();
 };
 
-export default clearCache;
+module.exports = clearCache;

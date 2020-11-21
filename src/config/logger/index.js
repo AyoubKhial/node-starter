@@ -1,5 +1,5 @@
-import { join, dirname } from 'path';
-import winston from 'winston';
+const { join } = require('path');
+const winston = require('winston');
 
 const { createLogger, format, transports } = winston;
 
@@ -13,7 +13,7 @@ const logFormat = printf(info => {
 const options = {
     file: {
         level: 'info',
-        filename: join(dirname(new URL(import.meta.url).pathname), '../../logs/app.log'),
+        filename: join(__dirname, '../../logs/app.log'),
         handleExceptions: true,
         format: combine(timestamp(), prettyPrint()),
         maxsize: 5242880
@@ -39,4 +39,4 @@ logger.stream = {
     }
 };
 
-export default logger;
+module.exports = logger;
