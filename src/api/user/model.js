@@ -1,12 +1,8 @@
-const bcryptjs = require('bcryptjs');
+const { compare, genSalt, hash } = require('bcryptjs');
 const { createHash, randomBytes } = require('crypto');
-const jsonwebtoken = require('jsonwebtoken');
-const mongoose = require('mongoose');
+const { sign } = require('jsonwebtoken');
+const { model, Schema } = require('mongoose');
 const config = require('../../config/env');
-
-const { compare, genSalt, hash } = bcryptjs;
-const { sign } = jsonwebtoken;
-const { model, Schema } = mongoose;
 
 const schema = new Schema(
     {

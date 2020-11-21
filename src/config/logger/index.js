@@ -1,7 +1,5 @@
 const { join } = require('path');
-const winston = require('winston');
-
-const { createLogger, format, transports } = winston;
+const { createLogger, format, transports } = require('winston');
 
 const { combine, timestamp, prettyPrint, errors, colorize, printf } = format;
 
