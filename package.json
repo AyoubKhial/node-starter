@@ -6,6 +6,7 @@
     "scripts": {
         "dev": "NODE_ENV=development nodemon -r dotenv/config ./src/app.js dotenv_config_path=./src/config/env/development.env",
         "lint": "eslint --fix . && echo 'Lint complete.'",
+        "re-install": "rm -rf node_modules && npm install",
         "start": "node ./src/app.js"
     },
     "repository": {
