@@ -1,5 +1,4 @@
 const cookieParser = require('cookie-parser');
-const csurf = require('csurf');
 const express = require('express');
 const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
