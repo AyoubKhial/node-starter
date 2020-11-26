@@ -2,7 +2,9 @@ const { compare, genSalt, hash } = require('bcryptjs');
 const { createHash, randomBytes } = require('crypto');
 const { sign } = require('jsonwebtoken');
 const { model, Schema } = require('mongoose');
-const config = require('../../config/env');
+const config = require('../../../config/env');
+const hooks = require('./hooks');
+const methods = require('./methods');
 
 const schema = new Schema(
     {
@@ -57,25 +59,8 @@ const schema = new Schema(
     { timestamps: true }
 );
 
-schema.pre('save', async function (next) {
-    if (!this.isModified('password')) next();
-    const salt = await genSalt();
-    this.password = await hash(this.password, salt);
-});
+schema.pre('save', hooks.preSaveHook(genSalt, hash));
 
-schema.methods.getSignedJwtToken = function () {
-    return sign({ id: this._id }, config.jwt.secret, { expiresIn: config.jwt.expiresIn });
-};
-
-schema.methods.matchPassword = async function (enteredPassword) {
-    return compare(enteredPassword, this.password);
-};
-
-schema.methods.getResetPasswordToken = function () {
-    const resetToken = randomBytes(20).toString('hex');
-    this.resetPasswordToken = createHash('sha256').update(resetToken).digest('hex');
-    this.resetPasswordExpire = Date.now() + 10 * 60 * 1000;
-    return resetToken;
-};
+methods({ schema, compare, createHash, randomBytes, sign, config });
 
 module.exports = model('User', schema);

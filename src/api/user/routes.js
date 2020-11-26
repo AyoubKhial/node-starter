@@ -1,5 +1,5 @@
 const controller = require('./controller.js');
-const User = require('./model.js');
+const User = require('./model');
 
 const routes = [
     {

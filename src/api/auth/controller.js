@@ -4,7 +4,7 @@ const ErrorResponse = require('../../utils/error-response.js');
 const response = require('../../utils/response-builder.js');
 const sendMail = require('../../services/mailer.js');
 const sendTokenResponse = require('./service.js');
-const User = require('../user/model.js');
+const User = require('../user/model');
 
 const register = asyncWrapper(async (req, res, next) => {
     const userData = req.body;

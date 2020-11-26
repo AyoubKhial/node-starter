@@ -1,7 +1,7 @@
 const asyncWrapper = require('../../utils/async-wrapper.js');
 const ErrorResponse = require('../../utils/error-response.js');
 const response = require('../../utils/response-builder.js');
-const User = require('./model.js');
+const User = require('./model');
 
 // example: /users?fields=name,year&sort=-createdAt&age[lte]=75
 const find = asyncWrapper(async (req, res, next) => {

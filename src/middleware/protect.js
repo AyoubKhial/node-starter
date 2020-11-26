@@ -1,6 +1,6 @@
 const jsonwebtoken = require('jsonwebtoken');
 const ErrorResponse = require('../utils/error-response.js');
-const User = require('../api/user/model.js');
+const User = require('../api/user/model');
 const config = require('../config/env');
 
 const { verify } = jsonwebtoken;
