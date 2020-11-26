@@ -5,6 +5,14 @@
         "ecmaVersion": 2020,
         "sourceType": "module"
     },
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "extensions": [".js"],
+                "moduleDirectory": ["node_modules", "src"]
+            }
+        }
+    },
     "rules": {
         "prettier/prettier": [
             "error",
