@@ -1,4 +1,9 @@
+const crypto = require('crypto');
 const controller = require('./controller.js');
+const service = require('./service');
+const User = require('../user/model');
+const response = require('../../utils/response-builder.js');
+const mailerService = require('../../services/mailer');
 
 const routes = [
     {
@@ -9,8 +14,8 @@ const routes = [
             methods: ['GET'],
             types: ['list']
         },
-        handler: async (req, res, next) => {
-            controller.register(req, res, next);
+        handler: (req, res, next) => {
+            return controller.register({ req, res, next, userModel: User, service });
         }
     },
     {
@@ -20,15 +25,15 @@ const routes = [
             windowMs: 1 * 60 * 1000,
             max: 5
         },
-        handler: async (req, res, next) => {
-            controller.login(req, res, next);
+        handler: (req, res, next) => {
+            return controller.login({ req, res, next, userModel: User, service });
         }
     },
     {
         path: '/auth/logout',
         method: 'GET',
-        handler: async (req, res, next) => {
-            controller.logout(req, res, next);
+        handler: (req, res, next) => {
+            return controller.logout({ req, res, next, response });
         }
     },
     {
@@ -37,22 +42,22 @@ const routes = [
         protected: {
             roles: ['USER', 'PUBLISHER', 'ADMIN']
         },
-        handler: async (req, res, next) => {
-            controller.getLoggedInUser(req, res, next);
+        handler: (req, res, next) => {
+            return controller.getLoggedInUser({ req, res, next, response });
         }
     },
     {
         path: '/auth/forgot-password',
         method: 'POST',
         handler: async (req, res, next) => {
-            controller.forgotPassword(req, res, next);
+            return controller.forgotPassword({ req, res, next, response, userModel: User, mailerService });
         }
     },
     {
         path: '/auth/reset-password/:resetToken',
         method: 'PUT',
-        handler: async (req, res, next) => {
-            controller.resetPassword(req, res, next);
+        handler: (req, res, next) => {
+            return controller.resetPassword({ req, res, next, userModel: User, service, crypto });
         }
     }
 ];

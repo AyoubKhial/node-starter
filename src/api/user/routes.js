@@ -1,5 +1,6 @@
 const controller = require('./controller.js');
 const User = require('./model');
+const response = require('../../utils/response-builder.js');
 
 const routes = [
     {
@@ -19,7 +20,7 @@ const routes = [
             source: 'query'
         },
         handler: async (req, res, next) => {
-            controller.find(req, res, next);
+            controller.find({ req, res, next, response });
         }
     },
     {
@@ -29,21 +30,21 @@ const routes = [
             roles: ['ADMIN']
         },
         handler: async (req, res, next) => {
-            controller.findById(req, res, next);
+            controller.findById({ req, res, next, response, userModel: User });
         }
     },
     {
         path: '/users/:id',
         method: 'PUT',
         handler: async (req, res, next) => {
-            controller.updateById(req, res, next);
+            controller.updateById({ req, res, next, response, userModel: User });
         }
     },
     {
         path: '/users/:id',
         method: 'DELETE',
         handler: async (req, res, next) => {
-            controller.deleteById(req, res, next);
+            controller.deleteById({ req, res, next, response, userModel: User });
         }
     }
 ];
