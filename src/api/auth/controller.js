@@ -1,6 +1,5 @@
 const { createHash } = require('crypto');
 const asyncWrapper = require('../../utils/async-wrapper.js');
-const ErrorResponse = require('../../utils/error-response.js');
 const response = require('../../utils/response-builder.js');
 const sendMail = require('../../services/mailer.js');
 const sendTokenResponse = require('./service.js');
@@ -14,11 +13,11 @@ const register = asyncWrapper(async (req, res, next) => {
 
 const login = asyncWrapper(async (req, res, next) => {
     const { email, password } = req.body;
-    if (!email || !password) return next(new ErrorResponse('Please provide an email and password', 400));
+    if (!email || !password) return next({ message: 'Please provide an email and password', code: 400 });
     const user = await User.findOne({ email }).select('+password');
-    if (!user) return next(new ErrorResponse('Invalid credentials', 401));
+    if (!user) return next({ message: 'Invalid credentials', code: 401 });
     const isMatched = await user.matchPassword(password);
-    if (!isMatched) return next(new ErrorResponse('Invalid credentials', 401));
+    if (!isMatched) return next({ message: 'Invalid credentials', code: 401 });
     return sendTokenResponse(user, 200, res);
 });
 
@@ -35,7 +34,7 @@ const getLoggedInUser = (req, res, next) => {
 const forgotPassword = asyncWrapper(async (req, res, next) => {
     const email = req.body.email;
     const user = await User.findOne({ email });
-    if (!user) return next(new ErrorResponse('There is no user with that email', 404));
+    if (!user) return next({ message: 'There is no user with that email', code: 404 });
     const resetToken = user.getResetPasswordToken();
     await user.save({ validateBeforeSave: false });
     const resetUrl = `${req.protocol}://${req.get('host')}/api/auth/reset-password/${resetToken}`;
@@ -47,7 +46,7 @@ const forgotPassword = asyncWrapper(async (req, res, next) => {
         user.resetPasswordToken = undefined;
         user.resetPasswordExpire = undefined;
         await user.save({ validateBeforeSave: false });
-        return next(new ErrorResponse('Email could not be sent.', 500));
+        return next({ message: 'Email could not be sent.', code: 500 });
     }
 });
 
@@ -56,7 +55,7 @@ const resetPassword = asyncWrapper(async (req, res, next) => {
     const password = req.body.password;
     const resetPasswordToken = createHash('sha256').update(resetToken).digest('hex');
     const user = await User.findOne({ resetPasswordToken, resetPasswordExpire: { $gt: Date.now() } });
-    if (!user) return next(new ErrorResponse('Invalid Token.', 400));
+    if (!user) return next({ message: 'Invalid Token', code: 401 });
     user.password = password;
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
