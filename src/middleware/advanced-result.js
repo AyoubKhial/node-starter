@@ -1,6 +1,4 @@
-const { set } = require('../config/cache/helper.js');
-
-const advancedResult = model => async (req, res, next) => {
+const advancedResult = ({ model, cacheService }) => async (req, res, next) => {
     if (res.cachedData) res.advancedResult = res.cachedData;
     else {
         const { query } = req;
@@ -39,7 +37,7 @@ const advancedResult = model => async (req, res, next) => {
         const keyPrefix = 'collection:User method:GET type:list';
         const key = `${keyPrefix} page:${page} size:${size} sort:${sort} expand:${expand} fields:${fields}`;
         res.advancedResult = { success: true, total, pagination, data };
-        set({ key, data: JSON.stringify(res.advancedResult), mode: 'EX', expiresIn: 3600 });
+        cacheService.set({ key, data: JSON.stringify(res.advancedResult), mode: 'EX', expiresIn: 3600 });
     }
     next();
 };

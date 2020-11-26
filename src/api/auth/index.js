@@ -1,5 +1,5 @@
-const authModule = ({ app, binder, routes, middleware }) => {
-    return binder({ app, routes, middleware });
+const authModule = ({ app, binder, routes, middleware, cacheService }) => {
+    return binder({ app, routes, middleware, cacheService });
 };
 
 module.exports = authModule;

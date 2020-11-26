@@ -6,13 +6,16 @@ const helmet = require('helmet');
 const hpp = require('hpp');
 const morgan = require('morgan');
 const path = require('path');
+const util = require('util');
 const xss = require('xss-clean');
+const cache = require('../cache');
 const errorHandler = require('../../middleware/error-handler.js');
 const getPathsList = require('./helpers.js');
 const logger = require('../logger');
 const modules = require('./modules.js');
 const to = require('../../utils/await-to.js');
 const helpers = require('../../utils/helpers');
+const cacheService = require('../cache/helper');
 
 const createExpressApp = async () => {
     const app = express();
@@ -42,7 +45,8 @@ const createExpressApp = async () => {
                 app: router,
                 binder: require('../../utils/http-binder'),
                 routes: module.routes,
-                middleware: helpers.getMiddleware({ fs, path })
+                middleware: helpers.getMiddleware({ fs, path }),
+                cacheService: cacheService({ util, client: cache().getClient() })
             });
         });
     }
