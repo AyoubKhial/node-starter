@@ -15,7 +15,7 @@ const binder = ({ app, routes, middleware, cacheService }) => {
             args = addMiddleware(args, middleware.cachedResult({ ...route?.cachedResult, cacheService }));
         if (route?.advancedResult)
             args = addMiddleware(args, middleware.advancedResult({ model: route?.advancedResult?.model, cacheService }));
-        if (route?.clearCache) args = addMiddleware(args, middleware.clearCache(route?.clearCache));
+        if (route?.clearCache) args = addMiddleware(args, middleware.clearCache({ ...route?.clearCache, cacheService }));
         app[route.method.toLowerCase()](...args);
     }
     return app;
