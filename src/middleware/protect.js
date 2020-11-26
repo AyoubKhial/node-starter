@@ -1,6 +1,6 @@
 const { verify } = require('jsonwebtoken');
-const User = require('../api/user/model');
-const config = require('../config/env');
+const User = require('api/user/model');
+const config = require('config/env');
 
 const protect = roles => async (req, res, next) => {
     let token;

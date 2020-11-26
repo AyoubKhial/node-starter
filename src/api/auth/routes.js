@@ -1,9 +1,9 @@
 const crypto = require('crypto');
-const controller = require('./controller.js');
-const service = require('./service');
-const User = require('../user/model');
-const response = require('../../utils/response-builder.js');
-const mailerService = require('../../services/mailer');
+const controller = require('api/auth/controller.js');
+const service = require('api/auth/service');
+const User = require('api/user/model');
+const response = require('utils/response-builder.js');
+const mailerService = require('services/mailer');
 
 const routes = [
     {

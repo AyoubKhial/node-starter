@@ -1,4 +1,4 @@
-const Response = require('../utils/response-builder.js');
+const Response = require('utils/response-builder.js');
 
 const errorHandler = (err, req, res, next) => {
     const message = 'Server error.';

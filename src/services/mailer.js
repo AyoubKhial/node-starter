@@ -1,6 +1,6 @@
 const { createTransport } = require('nodemailer');
-const config = require('../config/env');
-const logger = require('../config/logger');
+const config = require('config/env');
+const logger = require('config/logger');
 
 const sendMail = async options => {
     const transporter = createTransport({

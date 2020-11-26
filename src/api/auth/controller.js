@@ -1,4 +1,4 @@
-const asyncWrapper = require('../../utils/async-wrapper.js');
+const asyncWrapper = require('utils/async-wrapper.js');
 
 const register = asyncWrapper(async ({ req, res, next, userModel, service }) => {
     const userData = req.body;

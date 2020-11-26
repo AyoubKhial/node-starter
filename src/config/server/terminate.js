@@ -1,4 +1,4 @@
-const logger = require('../logger');
+const logger = require('config/logger');
 
 const terminate = (server, options = { coredump: false, timeout: 500 }) => {
     const exit = code => {

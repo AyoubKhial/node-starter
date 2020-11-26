@@ -1,4 +1,4 @@
-const config = require('../../config/env');
+const config = require('config/env');
 
 const sendTokenResponse = (user, statusCode, res) => {
     const token = user.getSignedJwtToken();

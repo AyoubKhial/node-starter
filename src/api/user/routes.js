@@ -1,6 +1,6 @@
 const controller = require('./controller.js');
-const User = require('./model');
-const response = require('../../utils/response-builder.js');
+const User = require('api/user/model');
+const response = require('utils/response-builder.js');
 
 const routes = [
     {

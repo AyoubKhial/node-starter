@@ -10,11 +10,11 @@ const util = require('util');
 const xss = require('xss-clean');
 const cache = require('../cache');
 const errorHandler = require('../../middleware/error-handler.js');
-const logger = require('../logger');
-const modules = require('./modules.js');
-const to = require('../../utils/await-to.js');
-const helpers = require('../../utils/helpers');
-const cacheService = require('../cache/helper');
+const logger = require('config/logger');
+const modules = require('config/server/modules.js');
+const to = require('utils/await-to.js');
+const helpers = require('utils/helpers');
+const cacheService = require('config/cache/helper');
 
 const createExpressApp = async () => {
     const app = express();
