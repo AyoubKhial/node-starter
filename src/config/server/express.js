@@ -10,7 +10,6 @@ const util = require('util');
 const xss = require('xss-clean');
 const cache = require('../cache');
 const errorHandler = require('../../middleware/error-handler.js');
-const getPathsList = require('./helpers.js');
 const logger = require('../logger');
 const modules = require('./modules.js');
 const to = require('../../utils/await-to.js');
@@ -29,7 +28,7 @@ const createExpressApp = async () => {
     app.use(morgan('dev', { stream: logger.stream }));
 
     const router = express.Router();
-    const modulesPaths = getPathsList(modules);
+    const modulesPaths = helpers.getPathsList(modules);
     const imports = modulesPaths.map(modulePath => {
         return {
             module: require(`../../api/${modulePath}`),
