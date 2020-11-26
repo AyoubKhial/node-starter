@@ -1,4 +1,5 @@
-const routes = require('./routes.js');
-const HttpBinder = require('../../utils/http-binder.js');
+const userModule = ({ app, binder, routes, middleware }) => {
+    return binder({ app, routes, middleware });
+};
 
-module.exports = app => HttpBinder(app, routes);
+module.exports = userModule;

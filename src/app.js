@@ -10,7 +10,7 @@ cache.connect({
 (async () => {
     await Promise.all([
         server.start({
-            app: require('./config/server/express'),
+            app: await require('./config/server/express'),
             config: require('./config/env'),
             logger: require('./config/logger'),
             terminate: require('./config/server/terminate')
