@@ -1,8 +1,4 @@
-const mongoose = require('mongoose');
-const config = require('../env');
-const logger = require('../logger');
-
-const connect = async () => {
+const connect = async ({ mongoose, config, logger }) => {
     const url = `mongodb://${config.database.host}:${config.database.port}/${config.database.name}`;
     const options = {
         useNewUrlParser: true,

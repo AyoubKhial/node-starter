@@ -1,9 +1,4 @@
-const app = require('./express');
-const config = require('../env');
-const logger = require('../logger');
-const terminate = require('./terminate.js');
-
-const start = async () => {
+const start = async ({ app, config, logger, terminate }) => {
     const server = app.listen(config.node.port, () => {
         logger.info(`Server running in ${config.node.env} mode on port ${config.node.port}...`);
     });

@@ -1,13 +1,18 @@
-const redis = require('redis');
-const logger = require('../logger');
-const config = require('../env');
+let client;
 
-const client = redis.createClient({
-    host: config.redis.host,
-    port: config.redis.port
-});
+const setClient = ({ redis, config }) => {
+    client = redis.createClient({
+        host: config.redis.host,
+        port: config.redis.port
+    });
+};
 
-const connect = () => {
+const getClient = () => {
+    return client;
+};
+
+const connect = ({ redis, config, logger }) => {
+    setClient({ redis, config });
     client.on('connect', () => {
         logger.info(`Redis connected on port: ${client?.options?.port}`);
     });
@@ -16,4 +21,4 @@ const connect = () => {
     });
 };
 
-module.exports = { connect, client };
+module.exports = { connect, client: getClient() };
