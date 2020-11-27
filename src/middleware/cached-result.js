@@ -7,7 +7,7 @@ const cachedResult = ({ collection, method, type, keys, source, cacheService }) 
     const dataAsString = Object.entries({ ...data, ...keysValues }).reduce((a, b) => `${a} ${b[0]}:${b[1]}`, '');
     const cachedData = await cacheService.get(dataAsString.trim());
     if (cachedData !== null) res.cachedData = JSON.parse(cachedData);
-    next();
+    return next();
 };
 
 module.exports = cachedResult;
