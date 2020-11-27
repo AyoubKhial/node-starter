@@ -1,23 +1,31 @@
-const controller = require('./controller.js');
+const controller = require('api/user/controller.js');
 const User = require('api/user/model');
 const response = require('utils/response-builder.js');
+const config = require('config/env');
+const cacheService = require('config/cache/helper');
+const util = require('util');
+const cache = require('config/cache')
 
 const routes = [
     {
         path: '/users',
         method: 'GET',
-        protected: {
-            roles: ['ADMIN']
+        protect: {
+            roles: ['ADMIN'],
+            config,
+            userModel: User
         },
         advancedResult: {
-            model: User
+            model: User,
+            cacheService: cacheService({ util, client: cache().getClient() })
         },
         cachedResult: {
             collection: 'User',
             method: 'GET',
             type: 'list',
             keys: ['page', 'size', 'sort', 'expand', 'fields'],
-            source: 'query'
+            source: 'query',
+            cacheService: cacheService({ util, client: cache().getClient() })
         },
         handler: async (req, res, next) => {
             controller.find({ req, res, next, response });
@@ -26,8 +34,10 @@ const routes = [
     {
         path: '/users/:id',
         method: 'GET',
-        protected: {
-            roles: ['ADMIN']
+        protect: {
+            roles: ['ADMIN'],
+            config,
+            userModel: User
         },
         handler: async (req, res, next) => {
             controller.findById({ req, res, next, response, userModel: User });

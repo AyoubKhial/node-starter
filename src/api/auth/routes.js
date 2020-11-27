@@ -4,6 +4,10 @@ const service = require('api/auth/service');
 const User = require('api/user/model');
 const response = require('utils/response-builder.js');
 const mailerService = require('services/mailer');
+const cacheService = require('config/cache/helper');
+const config = require('config/env');
+const util = require('util');
+const cache = require('config/cache')
 
 const routes = [
     {
@@ -12,7 +16,8 @@ const routes = [
         clearCache: {
             collections: ['User'],
             methods: ['GET'],
-            types: ['list']
+            types: ['list'],
+            cacheService: cacheService({ util, client: cache().getClient() })
         },
         handler: (req, res, next) => {
             return controller.register({ req, res, next, userModel: User, service });
@@ -21,7 +26,7 @@ const routes = [
     {
         path: '/auth/login',
         method: 'POST',
-        limit: {
+        rateLimiter: {
             windowMs: 1 * 60 * 1000,
             max: 5
         },
@@ -39,8 +44,10 @@ const routes = [
     {
         path: '/auth/me',
         method: 'GET',
-        protected: {
-            roles: ['USER', 'PUBLISHER', 'ADMIN']
+        protect: {
+            roles: ['USER', 'PUBLISHER', 'ADMIN'],
+            config,
+            userModel: User
         },
         handler: (req, res, next) => {
             return controller.getLoggedInUser({ req, res, next, response });

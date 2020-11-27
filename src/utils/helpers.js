@@ -34,17 +34,13 @@ const addMiddleware = (args, middleware) => {
     return newArgs;
 };
 
-const getRoutesWithMiddleware = ({ routes, middleware, config, cacheService, userModel }) => {
+const getRoutesWithMiddleware = ({ routes, middlewareList }) => {
     return routes.map(route => {
         let args = [route.path, route.handler];
-        if (route?.protected)
-            args = addMiddleware(args, middleware.protect({ roles: route?.protected?.roles, config, userModel }));
-        if (route?.limit) args = addMiddleware(args, middleware.rateLimiter(route?.limit));
-        if (route?.cachedResult)
-            args = addMiddleware(args, middleware.cachedResult({ ...route?.cachedResult, cacheService }));
-        if (route?.advancedResult)
-            args = addMiddleware(args, middleware.advancedResult({ model: route?.advancedResult?.model, cacheService }));
-        if (route?.clearCache) args = addMiddleware(args, middleware.clearCache({ ...route?.clearCache, cacheService }));
+        const { path, method, handler, ...middleware } = route;
+        for (const [key, value] of Object.entries(middleware)) {
+            args = addMiddleware(args, middlewareList[key]({ ...value }))
+        }
         return { method: route.method.toLowerCase(), args };
     });
 };

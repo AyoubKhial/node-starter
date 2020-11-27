@@ -1,5 +1,5 @@
-const userModule = ({ binder, routes, middleware, cacheService, config, userModel }) => {
-    return binder({ routes, middleware, cacheService, config, userModel });
+const userModule = ({ binder, routes, middlewareList }) => {
+    return binder({ routes, middlewareList });
 };
 
 module.exports = userModule;

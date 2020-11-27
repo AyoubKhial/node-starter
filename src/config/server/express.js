@@ -14,9 +14,6 @@ const logger = require('config/logger');
 const modules = require('config/server/modules.js');
 const to = require('utils/await-to.js');
 const helpers = require('utils/helpers');
-const cacheService = require('config/cache/helper');
-const User = require('api/user/model');
-const config = require('config/env');
 
 const createExpressApp = async () => {
     const app = express();
@@ -41,15 +38,12 @@ const createExpressApp = async () => {
     const [error, importedModules] = await to(Promise.all(importsPromises));
     if (error) logger.error(error);
     else {
-        const middleware = helpers.getMiddlewareList({ fs, path });
+        const middlewareList = helpers.getMiddlewareList({ fs, path });
         for (const importedModule of importedModules) {
             const routes = importedModule.module({
                 binder: require('utils/helpers').getRoutesWithMiddleware,
                 routes: importedModule.routes,
-                middleware,
-                cacheService: cacheService({ util, client: cache().getClient() }),
-                userModel: User,
-                config
+                middlewareList
             });
             for (const route of routes) {
                 router[route.method](...route.args);
