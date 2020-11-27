@@ -31,27 +31,29 @@ const createExpressApp = async () => {
 
     const router = express.Router();
     const modulesPaths = helpers.getPathsList(modules);
-    const imports = modulesPaths.map(modulePath => {
+    const importsPromises = modulesPaths.map(modulePath => {
+        const basePath = `../../api/${modulePath}`;
         return {
-            module: require(`../../api/${modulePath}`),
-            routes: require(`../../api/${modulePath}/routes`)
+            module: require(basePath),
+            routes: require(`${basePath}/routes`)
         };
     });
-
-    const [error, importedModules] = await to(Promise.all(imports));
+    const [error, importedModules] = await to(Promise.all(importsPromises));
     if (error) logger.error(error);
     else {
-        importedModules.forEach(module => {
-            return module.module({
-                app: router,
-                binder: require('../../utils/http-binder'),
-                routes: module.routes,
+        for (const importedModule of importedModules) {
+            const routes = importedModule.module({
+                binder: require('utils/helpers').getRoutesWithMiddleware,
+                routes: importedModule.routes,
                 middleware: helpers.getMiddleware({ fs, path }),
                 cacheService: cacheService({ util, client: cache().getClient() }),
                 userModel: User,
                 config
             });
-        });
+            for (const route of routes) {
+                router[route.method](...route.args);
+            }
+        }
     }
 
     app.use('/api', router);
