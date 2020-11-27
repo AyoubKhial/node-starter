@@ -1,6 +1,6 @@
 const rateLimiter = require('middleware/rate-limiter');
 
-describe('Protect middleware', () => {
+describe('Rate limiter middleware', () => {
     it('Should check that token does not exist.', async () => {
         const rateLimit = options => options;
         const extraOptions = { windowMs: 1 * 60 * 1000, max: 5 }
