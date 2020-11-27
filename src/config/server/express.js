@@ -14,6 +14,7 @@ const logger = require('config/logger');
 const modules = require('config/server/modules.js');
 const to = require('utils/await-to.js');
 const helpers = require('utils/helpers');
+const Response = require('utils/response-builder.js');
 
 const createExpressApp = async () => {
     const app = express();
@@ -55,7 +56,7 @@ const createExpressApp = async () => {
     app.all('*', (req, res, next) => {
         next({ message: `Can't find ${req.originalUrl} on this server!`, code: 404 });
     });
-    app.use(errorHandler);
+    app.use(errorHandler({ responseBuilder: Response.build }));
 
     return app;
 };
