@@ -15,8 +15,8 @@ const modules = require('config/server/modules.js');
 const to = require('utils/await-to.js');
 const helpers = require('utils/helpers');
 const cacheService = require('config/cache/helper');
-const User = require('../../api/user/model');
-const config = require('../env');
+const User = require('api/user/model');
+const config = require('config/env');
 
 const createExpressApp = async () => {
     const app = express();
