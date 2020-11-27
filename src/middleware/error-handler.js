@@ -3,24 +3,24 @@ const errorHandler = ({ responseBuilder }) => (err, req, res, next) => {
     const code = 500;
 
     // Mongoose bad ObjectID
-    if (err.name === 'CastError') {
+    if (err?.name === 'CastError') {
         err.message = 'Resource not found.';
         err.code = 404;
     }
 
     // Mongoose duplicate key
-    if (err.code === 11000) {
+    if (err?.code === 11000) {
         err.message = 'Duplicate field value entered.';
         err.code = 400;
     }
 
     // Mongoose validation error
-    if (err.name === 'ValidationError') {
+    if (err?.name === 'ValidationError') {
         err.message = Object.values(err.errors).map(error => error.message);
         err.code = 400;
     }
 
-    return responseBuilder(res, { success: false, error: err.message || message }, err.code || code);
+    return responseBuilder(res, { success: false, error: err?.message || message }, err?.code || code);
 };
 
 module.exports = errorHandler;
