@@ -41,11 +41,12 @@ const createExpressApp = async () => {
     const [error, importedModules] = await to(Promise.all(importsPromises));
     if (error) logger.error(error);
     else {
+        const middleware = helpers.getMiddleware({ fs, path });
         for (const importedModule of importedModules) {
             const routes = importedModule.module({
                 binder: require('utils/helpers').getRoutesWithMiddleware,
                 routes: importedModule.routes,
-                middleware: helpers.getMiddleware({ fs, path }),
+                middleware,
                 cacheService: cacheService({ util, client: cache().getClient() }),
                 userModel: User,
                 config
