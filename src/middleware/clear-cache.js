@@ -9,7 +9,7 @@ const clearCache = ({ collections, methods, types, cacheService }) => async (req
     for (const key of keys.flat()) {
         cacheService.remove(key);
     }
-    next();
+    return next();
 };
 
 module.exports = clearCache;
