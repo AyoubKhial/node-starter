@@ -3,7 +3,7 @@ const helpers = require('utils/helpers');
 jest.mock('middleware/rate-limiter.js', () => jest.fn());
 jest.mock('middleware/protect.js', () => jest.fn());
 
-describe('Http binder utility', () => {
+describe('Helpers utility.', () => {
     it('Should get paths list of modules.', () => {
         const modules = {
             auth: 'auth',
