@@ -6,9 +6,10 @@ const addMiddleware = (args, middleware) => {
     return newArgs;
 };
 
-const getRoutesWithMiddleware = ({ route, middleware, cacheService }) => {
+const getRoutesWithMiddleware = ({ route, middleware, config, cacheService, userModel }) => {
     let args = [route.path, route.handler];
-    if (route?.protected) args = addMiddleware(args, middleware.protect(route?.protected?.roles));
+    if (route?.protected)
+        args = addMiddleware(args, middleware.protect({ roles: route?.protected?.roles, config, userModel }));
     if (route?.limit) args = addMiddleware(args, middleware.rateLimiter(route?.limit));
     if (route?.cachedResult) args = addMiddleware(args, middleware.cachedResult({ ...route?.cachedResult, cacheService }));
     if (route?.advancedResult)
@@ -17,9 +18,9 @@ const getRoutesWithMiddleware = ({ route, middleware, cacheService }) => {
     return args;
 };
 
-const binder = ({ app, routes, middleware, cacheService }) => {
+const binder = ({ app, routes, middleware, config, cacheService, userModel }) => {
     for (const route of routes) {
-        app[route.method.toLowerCase()](...getRoutesWithMiddleware({ route, middleware, cacheService }));
+        app[route.method.toLowerCase()](...getRoutesWithMiddleware({ route, middleware, config, cacheService, userModel }));
     }
     return app;
 };
