@@ -7,7 +7,8 @@ const mailerService = require('services/mailer');
 const cacheService = require('config/cache/helper');
 const config = require('config/env');
 const util = require('util');
-const cache = require('config/cache')
+const cache = require('config/cache');
+const { verify } = require('jsonwebtoken');
 
 const routes = [
     {
@@ -47,7 +48,8 @@ const routes = [
         protect: {
             roles: ['USER', 'PUBLISHER', 'ADMIN'],
             config,
-            userModel: User
+            userModel: User,
+            verifyToken: verify
         },
         handler: (req, res, next) => {
             return controller.getLoggedInUser({ req, res, next, response });

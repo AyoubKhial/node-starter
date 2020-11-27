@@ -4,7 +4,8 @@ const response = require('utils/response-builder.js');
 const config = require('config/env');
 const cacheService = require('config/cache/helper');
 const util = require('util');
-const cache = require('config/cache')
+const cache = require('config/cache');
+const { verify } = require('jsonwebtoken');
 
 const routes = [
     {
@@ -13,7 +14,8 @@ const routes = [
         protect: {
             roles: ['ADMIN'],
             config,
-            userModel: User
+            userModel: User,
+            verifyToken: verify
         },
         advancedResult: {
             model: User,
@@ -37,7 +39,8 @@ const routes = [
         protect: {
             roles: ['ADMIN'],
             config,
-            userModel: User
+            userModel: User,
+            verifyToken: verify
         },
         handler: async (req, res, next) => {
             controller.findById({ req, res, next, response, userModel: User });
