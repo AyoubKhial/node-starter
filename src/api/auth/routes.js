@@ -9,6 +9,7 @@ const config = require('config/env');
 const util = require('util');
 const cache = require('config/cache');
 const { verify } = require('jsonwebtoken');
+const rateLimit = require('express-rate-limit');
 
 const routes = [
     {
@@ -28,8 +29,11 @@ const routes = [
         path: '/auth/login',
         method: 'POST',
         rateLimiter: {
-            windowMs: 1 * 60 * 1000,
-            max: 5
+            rateLimit,
+            extraOptions: {
+                windowMs: 1 * 60 * 1000,
+                max: 5
+            }
         },
         handler: (req, res, next) => {
             return controller.login({ req, res, next, userModel: User, service });
