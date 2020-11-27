@@ -1,6 +1,6 @@
 const protect = require('middleware/protect');
 
-describe('Auth middleware', () => {
+describe('Protect middleware', () => {
     const user = { role: 'USER' };
 
     it('Should check that token does not exist.', async () => {

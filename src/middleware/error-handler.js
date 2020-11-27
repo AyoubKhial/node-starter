@@ -1,6 +1,7 @@
 const errorHandler = ({ responseBuilder }) => (err, req, res, next) => {
     const message = 'Server error.';
     const code = 500;
+
     // Mongoose bad ObjectID
     if (err.name === 'CastError') {
         err.message = 'Resource not found.';
