@@ -4,3 +4,4 @@ dist/
 src/config/env/development.env
 src/config/env/test.env
 src/logs/
+coverage/
