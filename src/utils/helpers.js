@@ -8,7 +8,7 @@ const removeExtension = input => {
     return input.split('.').slice(0, -1).join('.');
 };
 
-const getMiddleware = ({ fs, path }) => {
+const getMiddlewareList = ({ fs, path }) => {
     const middlewareDirectory = path.join(__dirname, '../middleware');
     const middleware = fs.readdirSync(middlewareDirectory);
     const exclude = ['error-handler.js'];
@@ -19,9 +19,9 @@ const getMiddleware = ({ fs, path }) => {
     return middlewareObject;
 };
 
-const getPathsList = node => {
+const getPathsList = modules => {
     const pathsList = [];
-    for (const [key, value] of Object.entries(node)) {
+    for (const [key, value] of Object.entries(modules)) {
         if (value && typeof value === 'object') pathsList.push(...getPathsList(value).map(p => `${key}/${p}`));
         else pathsList.push(key);
     }
@@ -49,4 +49,4 @@ const getRoutesWithMiddleware = ({ routes, middleware, config, cacheService, use
     });
 };
 
-module.exports = { getMiddleware, getPathsList, getRoutesWithMiddleware };
+module.exports = { getMiddlewareList, getPathsList, getRoutesWithMiddleware };

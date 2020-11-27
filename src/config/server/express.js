@@ -41,7 +41,7 @@ const createExpressApp = async () => {
     const [error, importedModules] = await to(Promise.all(importsPromises));
     if (error) logger.error(error);
     else {
-        const middleware = helpers.getMiddleware({ fs, path });
+        const middleware = helpers.getMiddlewareList({ fs, path });
         for (const importedModule of importedModules) {
             const routes = importedModule.module({
                 binder: require('utils/helpers').getRoutesWithMiddleware,
