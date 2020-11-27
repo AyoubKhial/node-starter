@@ -20,6 +20,10 @@ const cacheClient = () => {
             client.on('error', err => {
                 logger.error(`500 - Could not connect to Redis: ${err}`);
             });
+        },
+
+        close() {
+            client.quit();
         }
     };
 };
