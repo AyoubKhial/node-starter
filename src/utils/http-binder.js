@@ -6,17 +6,20 @@ const addMiddleware = (args, middleware) => {
     return newArgs;
 };
 
+const getRoutesWithMiddleware = ({ route, middleware, cacheService }) => {
+    let args = [route.path, route.handler];
+    if (route?.protected) args = addMiddleware(args, middleware.protect(route?.protected?.roles));
+    if (route?.limit) args = addMiddleware(args, middleware.rateLimiter(route?.limit));
+    if (route?.cachedResult) args = addMiddleware(args, middleware.cachedResult({ ...route?.cachedResult, cacheService }));
+    if (route?.advancedResult)
+        args = addMiddleware(args, middleware.advancedResult({ model: route?.advancedResult?.model, cacheService }));
+    if (route?.clearCache) args = addMiddleware(args, middleware.clearCache({ ...route?.clearCache, cacheService }));
+    return args;
+};
+
 const binder = ({ app, routes, middleware, cacheService }) => {
     for (const route of routes) {
-        let args = [route.path, route.handler];
-        if (route?.protected) args = addMiddleware(args, middleware.protect(route?.protected?.roles));
-        if (route?.limit) args = addMiddleware(args, middleware.rateLimiter(route?.limit));
-        if (route?.cachedResult)
-            args = addMiddleware(args, middleware.cachedResult({ ...route?.cachedResult, cacheService }));
-        if (route?.advancedResult)
-            args = addMiddleware(args, middleware.advancedResult({ model: route?.advancedResult?.model, cacheService }));
-        if (route?.clearCache) args = addMiddleware(args, middleware.clearCache({ ...route?.clearCache, cacheService }));
-        app[route.method.toLowerCase()](...args);
+        app[route.method.toLowerCase()](...getRoutesWithMiddleware({ route, middleware, cacheService }));
     }
     return app;
 };
