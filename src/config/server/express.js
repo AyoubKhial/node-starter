@@ -15,6 +15,8 @@ const modules = require('./modules.js');
 const to = require('../../utils/await-to.js');
 const helpers = require('../../utils/helpers');
 const cacheService = require('../cache/helper');
+const User = require('../../api/user/model');
+const config = require('../env');
 
 const createExpressApp = async () => {
     const app = express();
@@ -45,7 +47,9 @@ const createExpressApp = async () => {
                 binder: require('../../utils/http-binder'),
                 routes: module.routes,
                 middleware: helpers.getMiddleware({ fs, path }),
-                cacheService: cacheService({ util, client: cache().getClient() })
+                cacheService: cacheService({ util, client: cache().getClient() }),
+                userModel: User,
+                config
             });
         });
     }

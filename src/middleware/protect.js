@@ -1,8 +1,6 @@
 const { verify } = require('jsonwebtoken');
-const User = require('../api/user/model');
-const config = require('../config/env');
 
-const protect = roles => async (req, res, next) => {
+const protect = ({ roles, userModel, config }) => async (req, res, next) => {
     let token;
     const authorization = req?.headers?.authorization;
     if (authorization && authorization.startsWith('Bearer')) token = authorization.split(' ')[1];
@@ -10,7 +8,7 @@ const protect = roles => async (req, res, next) => {
     if (!token) next({ message: 'Not authorized to access this route', code: 401 });
     try {
         const decoded = verify(token, config.jwt.secret);
-        req.user = await User.findById(decoded.id);
+        req.user = await userModel.findById(decoded.id);
         if (!roles.includes(req?.user?.role)) {
             next({ message: `User with role '${req?.user?.role}' is not authorized to access this route.`, code: 403 });
         }
