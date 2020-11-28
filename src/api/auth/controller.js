@@ -26,7 +26,7 @@ const getLoggedInUser = ({ req, res, next, response }) => {
     return response.build(res, { success: true, user }, 200);
 };
 
-const forgotPassword = asyncWrapper(async ({ req, res, next, response, userModel, mailerService }) => {
+const forgotPassword = asyncWrapper(async ({ req, res, next, response, userModel, mailerService, externalMailService, config }) => {
     const email = req.body.email;
     const user = await userModel.findOne({ email });
     if (!user) return next({ message: 'There is no user with that email', code: 404 });
@@ -35,7 +35,7 @@ const forgotPassword = asyncWrapper(async ({ req, res, next, response, userModel
     const resetUrl = `${req.protocol}://${req.get('host')}/api/auth/reset-password/${resetToken}`;
     const message = `Please make a put request to: \n\n${resetUrl}`;
     try {
-        await mailerService.sendMail({ email: user.email, subject: 'Reset password', message });
+        await mailerService.sendMail({ options: { email: user.email, subject: 'Reset password', message }, config, service: externalMailService });
         return response.build(res, { success: true, data: 'Email sent successfully.' }, 200);
     } catch {
         user.resetPasswordToken = undefined;

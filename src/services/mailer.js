@@ -1,9 +1,5 @@
-const { createTransport } = require('nodemailer');
-const config = require('config/env');
-const logger = require('config/logger');
-
-const sendMail = async options => {
-    const transporter = createTransport({
+const sendMail = ({ options, config, service }) => {
+    const transporter = service.createTransport({
         host: config.mail.host,
         port: config.mail.port,
         auth: {
@@ -17,8 +13,7 @@ const sendMail = async options => {
         subject: options.subject,
         text: options.message
     };
-    const info = await transporter.sendMail(message);
-    logger.info(`Message sent: ${info.messageId}`);
+    return transporter.sendMail(message);
 };
 
 module.exports = { sendMail };

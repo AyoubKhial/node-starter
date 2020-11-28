@@ -10,6 +10,7 @@ const util = require('util');
 const cache = require('config/cache');
 const { verify } = require('jsonwebtoken');
 const rateLimit = require('express-rate-limit');
+const nodemailer = require('nodemailer');
 
 const routes = [
     {
@@ -63,7 +64,7 @@ const routes = [
         path: '/auth/forgot-password',
         method: 'POST',
         handler: async (req, res, next) => {
-            return controller.forgotPassword({ req, res, next, response, userModel: User, mailerService });
+            return controller.forgotPassword({ req, res, next, response, userModel: User, mailerService, config, externalMailService: nodemailer });
         }
     },
     {
