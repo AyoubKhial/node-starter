@@ -1,6 +1,6 @@
 const cachedResult = require('middleware/cached-result');
 
-describe('cached result middleware', () => {
+describe('Cached result middleware', () => {
     const options = {
         collection: 'User',
         method: 'GET',
