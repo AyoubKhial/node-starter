@@ -3,6 +3,7 @@ const advancedResult = ({ model, cacheService }) => async (req, res, next) => {
     else {
         const { query } = req;
         const { fields, sort, expand, page = 1, size = 100 } = query;
+    
         // select
         const projection = fields?.replace(/\,/g, ' ') || '';
 
@@ -34,12 +35,13 @@ const advancedResult = ({ model, cacheService }) => async (req, res, next) => {
             .skip(startIndex)
             .limit(Number.parseInt(size, 10));
 
+        // cache
         const keyPrefix = 'collection:User method:GET type:list';
         const key = `${keyPrefix} page:${page} size:${size} sort:${sort} expand:${expand} fields:${fields}`;
         res.advancedResult = { success: true, total, pagination, data };
         cacheService.set({ key, data: JSON.stringify(res.advancedResult), mode: 'EX', expiresIn: 3600 });
     }
-    next();
+    return next();
 };
 
 module.exports = advancedResult;
