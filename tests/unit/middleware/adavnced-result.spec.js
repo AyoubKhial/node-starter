@@ -22,6 +22,10 @@ describe('Advanced result middleware', () => {
     const res = {};
     const next = jest.fn();
 
+    afterEach(() => {
+        next.mockClear();
+    });
+
     it('Should check that next get called with old cached result.', async () => {
         const req = {};
         const res = { cachedData: { data: 'some data' } };

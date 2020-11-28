@@ -15,30 +15,31 @@ describe('Cached result middleware', () => {
         page: 1
     };
     const next = jest.fn();
+    const cacheService = { get: jest.fn().mockReturnValue(null) };
+
+    afterEach(() => {
+        next.mockClear();
+    });
 
     it('Should check that next get called with query source and no cached data.', async () => {
-        const cacheService = { get: jest.fn().mockReturnValue(null) };
         const req = { query: reqOptions };
         await cachedResult({ ...options, cacheService })(req, res, next);
         expect(next).toHaveBeenCalled();
     });
 
     it('Should check that next get called with body source and no cached data.', async () => {
-        const cacheService = { get: jest.fn().mockReturnValue(null) };
         const req = { body: { ...reqOptions } };
         await cachedResult({ ...options, source: 'body', cacheService })(req, res, next);
         expect(next).toHaveBeenCalled();
     });
 
     it('Should check that next get called with params source and no cached data.', async () => {
-        const cacheService = { get: jest.fn().mockReturnValue(null) };
         const req = { params: reqOptions };
         await cachedResult({ ...options, source: 'params', cacheService })(req, res, next);
         expect(next).toHaveBeenCalled();
     });
 
     it('Should check that next get called with params source and no page and size params.', async () => {
-        const cacheService = { get: jest.fn().mockReturnValue(null) };
         const req = { query: { fields: 'name' } };
         await cachedResult({ ...options, cacheService })(req, res, next);
         expect(next).toHaveBeenCalled();

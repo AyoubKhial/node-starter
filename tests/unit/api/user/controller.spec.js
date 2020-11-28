@@ -23,6 +23,10 @@ describe('User controller', () => {
         findByIdAndDelete: id => ({ _id: id, name: 'user name' }),
     };
 
+    afterEach(() => {
+        next.mockClear();
+    });
+
     it('Should get all users.', async () => {
         const result = await userController.find({ req, res, next, response });
         expect(result).toHaveProperty('data');

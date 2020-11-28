@@ -1,8 +1,9 @@
 const errorHandler = require('middleware/error-handler');
 
 describe('Error handler middleware', () => {
+    const responseBuilder = (_, data, code) => ({ data, code });
+
     it('Should check Mongoose bad ObjectID exception is handled.', async () => {
-        const responseBuilder = (_, data, code) => ({ data, code });
         const err = { name: 'CastError' };
         const response = errorHandler({ responseBuilder })(err);
         expect(response).toHaveProperty('code');
@@ -12,7 +13,6 @@ describe('Error handler middleware', () => {
     });
 
     it('Should check Mongoose duplicate key exception is handled.', async () => {
-        const responseBuilder = (_, data, code) => ({ data, code });
         const err = { code: 11000 };
         const response = errorHandler({ responseBuilder })(err);
         expect(response).toHaveProperty('code');
@@ -22,7 +22,6 @@ describe('Error handler middleware', () => {
     });
 
     it('Should check Mongoose validation exceptions are handled.', async () => {
-        const responseBuilder = (_, data, code) => ({ data, code });
         const err = {
             name: 'ValidationError',
             errors: {
@@ -39,7 +38,6 @@ describe('Error handler middleware', () => {
     });
 
     it('Should check server exceptions are handled.', async () => {
-        const responseBuilder = (_, data, code) => ({ data, code });
         const response = errorHandler({ responseBuilder })();
         expect(response).toHaveProperty('code');
         expect(response.code).toEqual(500);
