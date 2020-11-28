@@ -2,7 +2,7 @@ const asyncWrapper = require('utils/async-wrapper.js');
 
 // example: /users?fields=name,year&sort=-createdAt&age[lte]=75
 const find = asyncWrapper(async ({ req, res, next, response }) => {
-    response.build(res, res.advancedResult, 200);
+    return response.build(res, res.advancedResult, 200);
 });
 
 const findById = asyncWrapper(async ({ req, res, next, response, userModel }) => {
