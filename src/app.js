@@ -7,6 +7,8 @@ cache().connect({
     config: require('./config/env'),
     logger: require('./config/logger')
 });
+
+// TODO: Use top level await when enabling it by eslint. (it would be available when top await proposal reach stage 4)
 (async () => {
     await Promise.all([
         server.start({

@@ -21,6 +21,7 @@
     },
     "homepage": "https://github.com/AyoubKhial/node-starter#readme",
     "devDependencies": {
+        "@types/jest": "^26.0.15",
         "dotenv": "^8.2.0",
         "eslint": "^7.9.0",
         "eslint-config-airbnb-base": "^14.2.0",
