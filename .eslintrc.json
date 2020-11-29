@@ -21,7 +21,7 @@
             }
         ],
         "linebreak-style": "off",
-        "no-unused-vars": ["error", { "argsIgnorePattern": "req|res|next|next" }],
+        "no-unused-vars": ["error", { "argsIgnorePattern": "req|res|next|next", "ignoreRestSiblings": true }],
         "comma-dangle": [2, "never"],
         "no-param-reassign": "off",
         "arrow-parens": "off",
