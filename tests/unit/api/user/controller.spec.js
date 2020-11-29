@@ -1,7 +1,5 @@
 const userController = require('api/user/controller');
 
-jest.mock('utils/async-wrapper.js', () => fn => ({ ...args }) => fn({ ...args }));
-
 describe('User controller', () => {
     const req = {
         params: {

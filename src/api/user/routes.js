@@ -6,6 +6,7 @@ const cacheService = require('config/cache/helper');
 const util = require('util');
 const cache = require('config/cache');
 const { verify } = require('jsonwebtoken');
+const asyncWrapper = require('utils/async-wrapper.js');
 
 const routes = [
     {
@@ -29,9 +30,9 @@ const routes = [
             source: 'query',
             cacheService: cacheService({ util, client: cache().getClient() })
         },
-        handler: async (req, res, next) => {
-            controller.find({ req, res, next, response });
-        }
+        handler: asyncWrapper(async (req, res, next) => {
+            return controller.find({ req, res, next, response });
+        })
     },
     {
         path: '/users/:id',
@@ -42,23 +43,23 @@ const routes = [
             userModel: User,
             verifyToken: verify
         },
-        handler: async (req, res, next) => {
-            controller.findById({ req, res, next, response, userModel: User });
-        }
+        handler: asyncWrapper(async (req, res, next) => {
+            return controller.findById({ req, res, next, response, userModel: User });
+        })
     },
     {
         path: '/users/:id',
         method: 'PUT',
-        handler: async (req, res, next) => {
-            controller.updateById({ req, res, next, response, userModel: User });
-        }
+        handler: asyncWrapper(async (req, res, next) => {
+            return controller.updateById({ req, res, next, response, userModel: User });
+        })
     },
     {
         path: '/users/:id',
         method: 'DELETE',
-        handler: async (req, res, next) => {
-            controller.deleteById({ req, res, next, response, userModel: User });
-        }
+        handler: asyncWrapper(async (req, res, next) => {
+            return controller.deleteById({ req, res, next, response, userModel: User });
+        })
     }
 ];
 

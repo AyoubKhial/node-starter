@@ -1,3 +1,3 @@
-const asyncWrapper = fn => ({ req, res, next, ...rest }) => fn({ req, res, next, ...rest }).catch(next);
+const asyncWrapper = fn => (req, res, next) => fn(req, res, next).catch(next);
 
 module.exports = asyncWrapper;

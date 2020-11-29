@@ -11,6 +11,7 @@ const cache = require('config/cache');
 const { verify } = require('jsonwebtoken');
 const rateLimit = require('express-rate-limit');
 const nodemailer = require('nodemailer');
+const asyncWrapper = require('utils/async-wrapper');
 
 const routes = [
     {
@@ -22,9 +23,9 @@ const routes = [
             types: ['list'],
             cacheService: cacheService({ util, client: cache().getClient() })
         },
-        handler: (req, res, next) => {
+        handler: asyncWrapper(async (req, res, next) => {
             return controller.register({ req, res, next, userModel: User, service, config });
-        }
+        })
     },
     {
         path: '/auth/login',
@@ -36,9 +37,9 @@ const routes = [
                 max: 5
             }
         },
-        handler: (req, res, next) => {
+        handler: asyncWrapper(async (req, res, next) => {
             return controller.login({ req, res, next, userModel: User, service, config });
-        }
+        })
     },
     {
         path: '/auth/logout',
@@ -63,7 +64,7 @@ const routes = [
     {
         path: '/auth/forgot-password',
         method: 'POST',
-        handler: async (req, res, next) => {
+        handler: asyncWrapper(async (req, res, next) => {
             return controller.forgotPassword({
                 req,
                 res,
@@ -74,14 +75,14 @@ const routes = [
                 config,
                 externalMailService: nodemailer
             });
-        }
+        })
     },
     {
         path: '/auth/reset-password/:resetToken',
         method: 'PUT',
-        handler: (req, res, next) => {
+        handler: asyncWrapper(async (req, res, next) => {
             return controller.resetPassword({ req, res, next, userModel: User, service, crypto, config });
-        }
+        })
     }
 ];
 

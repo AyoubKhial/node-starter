@@ -1,7 +1,5 @@
 const authController = require('api/auth/controller');
 
-jest.mock('utils/async-wrapper.js', () => fn => ({ ...args }) => fn({ ...args }));
-
 describe('Auth controller', () => {
     const req = {
         params: {
