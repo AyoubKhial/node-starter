@@ -32,7 +32,7 @@ describe('Auth controller', () => {
         select: jest.fn().mockReturnValue({ ...req.body, matchPassword: jest.fn().mockReturnValue(true) })
     };
     const service = {
-        sendTokenResponse: (user, code, _) => ({ user, code })
+        sendTokenResponse: ({ user, statusCode }) => ({ user, statusCode })
     };
     const crypto = {
         createHash() {
@@ -57,8 +57,8 @@ describe('Auth controller', () => {
                 email: 'ayoub.khial@gmail.com'
             })
         );
-        expect(result).toHaveProperty('code');
-        expect(result.code).toEqual(201);
+        expect(result).toHaveProperty('statusCode');
+        expect(result.statusCode).toEqual(201);
     });
 
     it('Should login a user.', async () => {
@@ -70,8 +70,8 @@ describe('Auth controller', () => {
                 email: 'ayoub.khial@gmail.com'
             })
         );
-        expect(result).toHaveProperty('code');
-        expect(result.code).toEqual(200);
+        expect(result).toHaveProperty('statusCode');
+        expect(result.statusCode).toEqual(200);
     });
 
     it('Should call next if email or/and password are not provided while login.', async () => {
@@ -221,8 +221,8 @@ describe('Auth controller', () => {
                 password: "123456"
             })
         );
-        expect(result).toHaveProperty('code');
-        expect(result.code).toEqual(200);
+        expect(result).toHaveProperty('statusCode');
+        expect(result.statusCode).toEqual(200);
     });
 
     it('Should call next if resetToken is not provided while resetting password.', async () => {

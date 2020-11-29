@@ -23,7 +23,7 @@ const routes = [
             cacheService: cacheService({ util, client: cache().getClient() })
         },
         handler: (req, res, next) => {
-            return controller.register({ req, res, next, userModel: User, service });
+            return controller.register({ req, res, next, userModel: User, service, config });
         }
     },
     {
@@ -37,7 +37,7 @@ const routes = [
             }
         },
         handler: (req, res, next) => {
-            return controller.login({ req, res, next, userModel: User, service });
+            return controller.login({ req, res, next, userModel: User, service, config });
         }
     },
     {
@@ -71,7 +71,7 @@ const routes = [
         path: '/auth/reset-password/:resetToken',
         method: 'PUT',
         handler: (req, res, next) => {
-            return controller.resetPassword({ req, res, next, userModel: User, service, crypto });
+            return controller.resetPassword({ req, res, next, userModel: User, service, crypto, config });
         }
     }
 ];

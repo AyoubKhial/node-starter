@@ -1,19 +1,19 @@
 const asyncWrapper = require('utils/async-wrapper.js');
 
-const register = asyncWrapper(async ({ req, res, next, userModel, service }) => {
+const register = asyncWrapper(async ({ req, res, next, userModel, service, config }) => {
     const userData = req.body;
     const user = await userModel.create(userData);
-    return service.sendTokenResponse(user, 201, res);
+    return service.sendTokenResponse({ user, statusCode: 201, res, config });
 });
 
-const login = asyncWrapper(async ({ req, res, next, userModel, service }) => {
+const login = asyncWrapper(async ({ req, res, next, userModel, service, config }) => {
     const { email, password } = req.body;
     if (!email || !password) return next({ message: 'Please provide an email and password.', code: 400 });
     const user = await userModel.findOne({ email }).select('+password');
     if (!user) return next({ message: 'Invalid credentials.', code: 401 });
     const isMatched = await user.matchPassword(password);
     if (!isMatched) return next({ message: 'Invalid credentials.', code: 401 });
-    return service.sendTokenResponse(user, 200, res);
+    return service.sendTokenResponse({ user, statusCode: 200, res, config });
 });
 
 const logout = ({ req, res, next, response }) => {
@@ -46,7 +46,7 @@ const forgotPassword = asyncWrapper(async ({ req, res, next, response, userModel
     }
 });
 
-const resetPassword = asyncWrapper(async ({ req, res, next, userModel, service, crypto }) => {
+const resetPassword = asyncWrapper(async ({ req, res, next, userModel, service, crypto, config }) => {
     const resetToken = req.params.resetToken;
     if (!resetToken) return next({ message: 'Please provide the reset token.', code: 400 });
     const password = req.body.password;
@@ -58,7 +58,7 @@ const resetPassword = asyncWrapper(async ({ req, res, next, userModel, service, 
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
     await user.save();
-    return service.sendTokenResponse(user, 200, res);
+    return service.sendTokenResponse({ user, statusCode: 200, res, config });
 });
 
 module.exports = { register, login, logout, getLoggedInUser, forgotPassword, resetPassword };
