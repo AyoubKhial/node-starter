@@ -1,7 +1,7 @@
 const { sendTokenResponse } = require('api/auth/service');
 
 describe('Auth service', () => {
-    it('Should call auth with auth routes and middleware', async () => {
+    it('Should send token in response.', async () => {
         const user = {
             getSignedJwtToken: jest.fn().mockReturnValue('token')
         };

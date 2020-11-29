@@ -13,4 +13,4 @@ describe('Await to utility', () => {
         expect(data).toBeUndefined();
         expect(err).toEqual({ data: 'some data' });
     });
-})
+});

@@ -1,6 +1,6 @@
 const userController = require('api/user/controller');
 
-jest.mock('utils/async-wrapper.js', () => fn => ({ ...args }) => fn({ ...args }))
+jest.mock('utils/async-wrapper.js', () => fn => ({ ...args }) => fn({ ...args }));
 
 describe('User controller', () => {
     const req = {
@@ -20,7 +20,7 @@ describe('User controller', () => {
     const userModel = {
         findById: id => ({ _id: id, name: 'user name' }),
         findByIdAndUpdate: id => ({ _id: id, name: 'new user name' }),
-        findByIdAndDelete: id => ({ _id: id, name: 'user name' }),
+        findByIdAndDelete: id => ({ _id: id, name: 'user name' })
     };
 
     afterEach(() => {
@@ -35,7 +35,7 @@ describe('User controller', () => {
         expect(result.code).toEqual(200);
     });
 
-   it('Should get a specific user.', async () => {
+    it('Should get a specific user.', async () => {
         const result = await userController.findById({ req, res, next, response, userModel });
         expect(result).toHaveProperty('data');
         expect(result.data).toEqual({ _id: '1', name: 'user name' });

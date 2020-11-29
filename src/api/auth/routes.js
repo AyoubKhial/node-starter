@@ -64,7 +64,16 @@ const routes = [
         path: '/auth/forgot-password',
         method: 'POST',
         handler: async (req, res, next) => {
-            return controller.forgotPassword({ req, res, next, response, userModel: User, mailerService, config, externalMailService: nodemailer });
+            return controller.forgotPassword({
+                req,
+                res,
+                next,
+                response,
+                userModel: User,
+                mailerService,
+                config,
+                externalMailService: nodemailer
+            });
         }
     },
     {

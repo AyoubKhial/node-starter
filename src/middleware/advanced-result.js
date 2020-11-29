@@ -3,7 +3,7 @@ const advancedResult = ({ model, cacheService }) => async (req, res, next) => {
     else {
         const { query } = req;
         const { fields, sort, expand, page = 1, size = 100 } = query;
-    
+
         // select
         const projection = fields?.replace(/\,/g, ' ') || '';
 

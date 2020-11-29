@@ -1,4 +1,4 @@
-const asyncWrapper = require('utils/async-wrapper.js');
+const asyncWrapper = require('utils/async-wrapper');
 
 const register = asyncWrapper(async ({ req, res, next, userModel, service, config }) => {
     const userData = req.body;
@@ -26,25 +26,31 @@ const getLoggedInUser = ({ req, res, next, response }) => {
     return response.build(res, { success: true, user }, 200);
 };
 
-const forgotPassword = asyncWrapper(async ({ req, res, next, response, userModel, mailerService, externalMailService, config }) => {
-    const email = req.body.email;
-    if (!email) return next({ message: 'Please provide an email.', code: 400 });
-    const user = await userModel.findOne({ email });
-    if (!user) return next({ message: `There is no user with '${email}' email.`, code: 404 });
-    const resetToken = user.getResetPasswordToken();
-    await user.save({ validateBeforeSave: false });
-    const resetUrl = `${req.protocol}://${req.get('host')}/api/auth/reset-password/${resetToken}`;
-    const message = `Please make a put request to: \n\n${resetUrl}`;
-    try {
-        await mailerService.sendMail({ options: { email: user.email, subject: 'Reset password', message }, config, service: externalMailService });
-        return response.build(res, { success: true, data: 'Email sent successfully.' }, 200);
-    } catch {
-        user.resetPasswordToken = undefined;
-        user.resetPasswordExpire = undefined;
+const forgotPassword = asyncWrapper(
+    async ({ req, res, next, response, userModel, mailerService, externalMailService, config }) => {
+        const email = req.body.email;
+        if (!email) return next({ message: 'Please provide an email.', code: 400 });
+        const user = await userModel.findOne({ email });
+        if (!user) return next({ message: `There is no user with '${email}' email.`, code: 404 });
+        const resetToken = user.getResetPasswordToken();
         await user.save({ validateBeforeSave: false });
-        return next({ message: 'Email could not be sent.', code: 500 });
+        const resetUrl = `${req.protocol}://${req.get('host')}/api/auth/reset-password/${resetToken}`;
+        const message = `Please make a put request to: \n\n${resetUrl}`;
+        try {
+            await mailerService.sendMail({
+                options: { email: user.email, subject: 'Reset password', message },
+                config,
+                service: externalMailService
+            });
+            return response.build(res, { success: true, data: 'Email sent successfully.' }, 200);
+        } catch {
+            user.resetPasswordToken = undefined;
+            user.resetPasswordExpire = undefined;
+            await user.save({ validateBeforeSave: false });
+            return next({ message: 'Email could not be sent.', code: 500 });
+        }
     }
-});
+);
 
 const resetPassword = asyncWrapper(async ({ req, res, next, userModel, service, crypto, config }) => {
     const resetToken = req.params.resetToken;

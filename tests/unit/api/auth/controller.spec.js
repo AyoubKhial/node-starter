@@ -147,7 +147,7 @@ describe('Auth controller', () => {
                     ...user,
                     getResetPasswordToken: jest.fn().mockReturnValue('token'),
                     save: jest.fn()
-                }
+                };
             }
         };
         const mailerService = {
@@ -193,7 +193,7 @@ describe('Auth controller', () => {
                     ...user,
                     getResetPasswordToken: jest.fn().mockReturnValue('token'),
                     save: jest.fn()
-                }
+                };
             }
         };
         const mailerService = {
@@ -211,14 +211,14 @@ describe('Auth controller', () => {
                 return {
                     ...user,
                     save: jest.fn()
-                }
+                };
             }
         };
         const result = await authController.resetPassword({ req, res, next, userModel, service, crypto });
         expect(result).toHaveProperty('user');
         expect(result.user).toEqual(
             expect.objectContaining({
-                password: "123456"
+                password: '123456'
             })
         );
         expect(result).toHaveProperty('statusCode');

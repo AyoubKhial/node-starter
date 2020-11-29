@@ -9,8 +9,8 @@ describe('Async wrapper utility', () => {
 
     it('Should call the next function.', async () => {
         const next = jest.fn();
-        const promiseFunction = () => Promise.reject()
+        const promiseFunction = () => Promise.reject();
         await asyncWrapper(promiseFunction)({ next });
         expect(next).toHaveBeenCalled();
     });
-})
+});

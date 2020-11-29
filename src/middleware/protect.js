@@ -8,7 +8,10 @@ const protect = ({ roles, userModel, config, verifyToken }) => async (req, res, 
         const decoded = verifyToken(token, config?.jwt?.secret);
         req.user = await userModel.findById(decoded.id);
         if (!roles.includes(req?.user?.role)) {
-            return next({ message: `User with role '${req?.user?.role}' is not authorized to access this route.`, code: 403 });
+            return next({
+                message: `User with role '${req?.user?.role}' is not authorized to access this route.`,
+                code: 403
+            });
         }
         return next();
     } catch (err) {

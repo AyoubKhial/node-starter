@@ -39,7 +39,7 @@ const getRoutesWithMiddleware = ({ routes, middlewareList }) => {
         let args = [route.path, route.handler];
         const { path, method, handler, ...middleware } = route;
         for (const [key, value] of Object.entries(middleware)) {
-            args = addMiddleware(args, middlewareList[key]({ ...value }))
+            args = addMiddleware(args, middlewareList[key]({ ...value }));
         }
         return { method: route.method.toLowerCase(), args };
     });

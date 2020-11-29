@@ -10,7 +10,7 @@ describe('Protect middleware', () => {
     };
     const res = {};
     const next = jest.fn();
-    
+
     afterEach(() => {
         next.mockClear();
     });
@@ -25,7 +25,7 @@ describe('Protect middleware', () => {
         const roles = ['USER'];
         const userModel = { findById: id => ({ _id: id, role: 'USER' }) };
         const config = {};
-        const verifyToken = jest.fn().mockReturnValue({ id: '1' })
+        const verifyToken = jest.fn().mockReturnValue({ id: '1' });
         const req = {
             headers: {
                 authorization: 'Bearer token'
@@ -40,7 +40,7 @@ describe('Protect middleware', () => {
         const roles = ['USER'];
         const userModel = { findById: id => ({ _id: id, role: 'USER' }) };
         const config = {};
-        const verifyToken = jest.fn().mockReturnValue({ id: '1' })
+        const verifyToken = jest.fn().mockReturnValue({ id: '1' });
         await protect({ roles, userModel, config, verifyToken })(req, res, next);
         expect(next).toHaveBeenCalledWith();
     });
@@ -49,7 +49,7 @@ describe('Protect middleware', () => {
         const roles = ['ADMIN'];
         const userModel = { findById: id => ({ _id: id, role: 'USER' }) };
         const config = {};
-        const verifyToken = jest.fn().mockReturnValue({ id: '1' })
+        const verifyToken = jest.fn().mockReturnValue({ id: '1' });
         await protect({ roles, userModel, config, verifyToken })(req, res, next);
         expect(next).toHaveBeenCalledWith({
             message: `User with role 'USER' is not authorized to access this route.`,
@@ -61,7 +61,7 @@ describe('Protect middleware', () => {
         const roles = ['ADMIN'];
         const userModel = { findById: id => ({ _id: id, role: 'USER' }) };
         const config = {};
-        const verifyToken = jest.fn().mockReturnValue(null)
+        const verifyToken = jest.fn().mockReturnValue(null);
         await protect({ roles, userModel, config, verifyToken })(req, res, next);
         expect(next).toHaveBeenCalledWith({ message: 'Not authorized to access this route', code: 401 });
     });

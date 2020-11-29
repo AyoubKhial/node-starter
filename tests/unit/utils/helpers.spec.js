@@ -9,7 +9,7 @@ describe('Helpers utility.', () => {
             auth: 'auth',
             user: 'user',
             product: 'product'
-        }
+        };
         const pathsList = helpers.getPathsList(modules);
         expect(pathsList).toEqual(expect.arrayContaining(['auth', 'user', 'product']));
     });
@@ -21,7 +21,7 @@ describe('Helpers utility.', () => {
                 admin: 'admin'
             },
             product: 'product'
-        }
+        };
         const pathsList = helpers.getPathsList(modules);
         expect(pathsList).toEqual(expect.arrayContaining(['auth', 'user/admin', 'product']));
     });
@@ -55,7 +55,7 @@ describe('Helpers utility.', () => {
         ];
         const routesWithMiddleware = helpers.getRoutesWithMiddleware({ routes });
         expect(routesWithMiddleware[0]).toHaveProperty('method');
-        expect(routesWithMiddleware[0].method).toEqual('get')
+        expect(routesWithMiddleware[0].method).toEqual('get');
         expect(routesWithMiddleware[0]).toHaveProperty('args');
         expect(routesWithMiddleware[0].args[0]).toEqual('/users');
         expect(routesWithMiddleware[0].args[1].name).toEqual('handler');
@@ -74,7 +74,7 @@ describe('Helpers utility.', () => {
         const protect = jest.fn();
         const routesWithMiddleware = helpers.getRoutesWithMiddleware({ routes, middlewareList: { protect } });
         expect(routesWithMiddleware[0]).toHaveProperty('method');
-        expect(routesWithMiddleware[0].method).toEqual('get')
+        expect(routesWithMiddleware[0].method).toEqual('get');
         expect(routesWithMiddleware[0]).toHaveProperty('args');
         expect(routesWithMiddleware[0].args[0]).toEqual('/users');
         expect(routesWithMiddleware[0].args[2].name).toEqual('handler');
@@ -95,7 +95,7 @@ describe('Helpers utility.', () => {
         const rateLimiter = jest.fn();
         const routesWithMiddleware = helpers.getRoutesWithMiddleware({ routes, middlewareList: { protect, rateLimiter } });
         expect(routesWithMiddleware[0]).toHaveProperty('method');
-        expect(routesWithMiddleware[0].method).toEqual('get')
+        expect(routesWithMiddleware[0].method).toEqual('get');
         expect(routesWithMiddleware[0]).toHaveProperty('args');
         expect(routesWithMiddleware[0].args[0]).toEqual('/users');
         expect(routesWithMiddleware[0].args[3].name).toEqual('handler');

@@ -3,12 +3,24 @@ const advancedResult = require('middleware/advanced-result');
 describe('Advanced result middleware', () => {
     const model = {
         countDocuments: () => Promise.resolve(1e3),
-        find() { return this },
-        populate() { return this },
-        select() { return this },
-        sort() { return this },
-        skip() { return this },
-        limit() { return Promise.resolve({ data: 'someData' }) }
+        find() {
+            return this;
+        },
+        populate() {
+            return this;
+        },
+        select() {
+            return this;
+        },
+        sort() {
+            return this;
+        },
+        skip() {
+            return this;
+        },
+        limit() {
+            return Promise.resolve({ data: 'someData' });
+        }
     };
     const cacheService = { set: jest.fn() };
     const query = {

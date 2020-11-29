@@ -14,9 +14,11 @@ describe('Mailer service', () => {
             }
         };
         const service = {
-            createTransport() { return this },
+            createTransport() {
+                return this;
+            },
             sendMail: message => message
-        }
+        };
         const response = await sendMail({ options, config, service });
         expect(response).toEqual({
             from: 'Movify <noreply@movify.com>',
