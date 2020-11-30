@@ -1,5 +1,6 @@
 const logger = require('config/logger');
 
+// TODO: Add dependency injection and inject logger as an argument.
 const terminate = (server, options = { coredump: false, timeout: 500 }) => {
     const exit = code => {
         options.coredump ? process.abort() : process.exit(code);
