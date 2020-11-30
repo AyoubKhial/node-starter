@@ -1,12 +1,12 @@
+const util = require('util');
+const { verify } = require('jsonwebtoken');
 const controller = require('api/user/controller.js');
 const User = require('api/user/model');
-const response = require('utils/response-builder.js');
-const config = require('config/env');
-const cacheService = require('config/cache/helper');
-const util = require('util');
 const cache = require('config/cache');
-const { verify } = require('jsonwebtoken');
+const cacheService = require('config/cache/helper');
+const config = require('config/env');
 const asyncWrapper = require('utils/async-wrapper.js');
+const response = require('utils/response-builder.js');
 
 const routes = [
     {

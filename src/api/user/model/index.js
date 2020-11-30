@@ -2,9 +2,9 @@ const { compare, genSalt, hash } = require('bcryptjs');
 const { createHash, randomBytes } = require('crypto');
 const { sign } = require('jsonwebtoken');
 const { model, Schema } = require('mongoose');
-const config = require('config/env');
 const hooks = require('api/user/model/hooks');
 const methods = require('api/user/model/methods');
+const config = require('config/env');
 
 const schema = new Schema(
     {

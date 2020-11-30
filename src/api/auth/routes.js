@@ -1,17 +1,17 @@
 const crypto = require('crypto');
+const rateLimit = require('express-rate-limit');
+const { verify } = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
+const util = require('util');
 const controller = require('api/auth/controller.js');
 const service = require('api/auth/service');
 const User = require('api/user/model');
-const response = require('utils/response-builder.js');
-const mailerService = require('services/mailer');
+const cache = require('config/cache');
 const cacheService = require('config/cache/helper');
 const config = require('config/env');
-const util = require('util');
-const cache = require('config/cache');
-const { verify } = require('jsonwebtoken');
-const rateLimit = require('express-rate-limit');
-const nodemailer = require('nodemailer');
+const mailerService = require('services/mailer');
 const asyncWrapper = require('utils/async-wrapper');
+const response = require('utils/response-builder.js');
 
 const routes = [
     {
